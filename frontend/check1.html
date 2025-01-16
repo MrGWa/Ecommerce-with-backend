@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- ---FLATICONS--- -->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+     
+     <!-- ---SWIPER --- -->
+     <link
+     rel="stylesheet"
+     href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+     <!-- ---CSS--- -->
+     <link rel="stylesheet" href="css/styles.css">
+    <title>Check-out</title>
+</head>
+<body>
+            <!-- ===== HEADER ====  -->
+            <header class="header">
+                <div class="header__top">
+                    <div class="header__container container">
+                        <div class="header__contact">
+                            <span>(+48) - 1234 -5678</span>
+        
+                            <span>Our Location</span>
+                        </div>
+                        <p class="header__alert-news">Rare Collection Models</p>
+                        <a href="login-register.html" class="header__top-action">
+                            <img src="./img/user.png" alt="User_logo" width="20" height="20"  style="margin-right: 8px; position: relative; top: 2px;">
+                            Log in / Sign Up
+                        </a>
+                    </div>
+                </div>
+        
+                <nav class="nav container">
+                    <a href="index.html" class="nav__logo">
+                        <img src="./img/logo.png" alt="" class="nav__logo-img">
+                    </a>
+        
+                    <div class="nav__menu" id="nav-menu"> 
+                        <ul class="nav__list">
+                               <li class="nav__item language">
+                                <span class="nav__link">Language</span>
+                                <ul class="language-menu">
+                                    <li><a href="index.html" class="nav__link">English</a></li>
+                                    <li><a href="russian.html" class="nav__link">Russian</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav__item">
+                                <a href="index.html" class="nav__link active-link">Home</a>
+                            </li>
+        
+                            <li class="nav__item">
+                                <a href="shop.html" class="nav__link">Shop</a>
+                            </li>
+        
+                            <li class="nav__item">
+                                <a href="accounts.html" class="nav__link">My Account</a>
+                            </li>
+                         
+                        </ul>
+        
+                        <div class="header__search">
+                            <input type="text" placeholder="Search for items..." class="form__input">
+                            
+                            <button class="search__btn">
+                                <img src="./img/search.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+        
+                    <div class="header__user-actions">
+                        <a href="wishlist.html" class="header__action-btn_Wishlist">
+                            <img src="./img/wishlist.png" alt="Wishlist">
+                            <span class="count">3</span>
+                        </a>
+        
+                        <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                            <img src="./img/cart.png" alt="Cart">
+                            <span class="count">3</span>
+                        </a>
+                    </div>
+                </nav>
+                </header>
+    
+            <!-- ===== BREADCRUMB ====  -->
+            <section class="breadcrumb">
+                    <ul class="breadcrumb__list flex container">
+                        <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                        <li><span class="breadcrumb__link">></span></li>
+                        <li><span class="breadcrumb__link">Cart</span></li>
+                        <li><span class="breadcrumb__link">></span></li>
+                        <li><span class="breadcrumb__link">Checkout</span></li>
+                    </ul>
+                 </section>
+            <!-- ===== CHECKOUT FORM ====  -->
+             <section class="chekout grid">
+                <h1>Checkout</h1>
+                <form class="Contact__Information grid">
+                    <h3>Contact Information</h3>
+                    <label for="name">Name</label><input type="text" placeholder="First Name" required>
+                    <label for="last name">Last Name</label><input type="text" placeholder="Last Name" required>
+                    <label for="email">Email</label><input type="email" placeholder="Email Address" required>
+                    <label for="phone number">Phone Number</label>
+                    <div class="phoneNumber__container">
+                        <select name="country_code" id="country_code" class="country_code"><option value="" disabled selected></option></select>
+                        <input type="text" id="phone-number"  class="phone-number" placeholder="Enter phone number" required>
+                    </div>
+                </form>
+
+                <form class="billing__address grid">
+                    <h3>Billing address</h3>
+                    <label for="country">Country</label><select id="countryDropdown" class="countryDropdown"><option value="" disabled selected>Select your country</option></select>
+                    <label for="state">State</label><input type="text" placeholder="State">
+                    <label for="city">City</label><input type="text" placeholder="City" required>
+                    <label for="zip">Zip</label><input type="text" placeholder="Zip" required>
+                    <label for="address">Address</label><input type="text" placeholder="Address" required>
+                </form>
+             </section>
+                  <!-- ===== NEWSLETTER ====  -->
+     <section class="newsletter section home__newsletter">
+        <div class="newsletter__container container grid">
+            <h3 class="newsletter__title flex">
+                <img src="./img/email.png" alt="" class="newsletter__icon">
+                Sign Up For Newsletter
+            </h3>
+            <p class="newsletter__description">...and receive $20 coupon for first shopping.</p>
+            <form action="https://formsubmit.co/mariamrusishvili2004@gmail.com" method="POST" class="newsletter__form"><input type="email" name="email" placeholder="Enter your Email" class="newsletter__input">
+            <button type="submit" class="newsletter__btn">Subscribe</button></form>
+        </div>
+     </section>
+
+          <!-- ===== FOOTER ====  -->
+      <footer class="footer container">
+        <div class="footer__container grind">
+            <div class="footer__content">
+                <a href="index.html" class="footer__logo">
+                    <img src="./img/logo.png" alt="" class="footer__logo-img">
+                </a>
+                <h4 class="footer__subtitle-contact">Contact</h4>
+
+                <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
+                <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
+
+                <div class="footer__social">
+                    <h4 class="footer__subtitle">Follow Me</h4>
+                    <div class="footer__social-links flex">
+                        <a href=""><img src="./img/facebook.png" alt="" class="footer__social-icon"></a>
+                        <a href=""><img src="./img/instagram.png" alt="" class="footer__social-icon"></a>
+                        <a href=""><img src="./img/youtube.png" alt="" class="footer__social-icon"></a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="footer__content">
+                <h3 class="footer__title">Address</h3>
+                <ul class="footer__links">
+                    <li><a href="" class="footer__link">About Us</a></li>
+                    <li><a href="" class="footer__link">Delivery Information</a></li>
+                    <li><a href="" class="footer__link">Privacy Policy</a></li>
+                    <li><a href="" class="footer__link">Terms & Conditions</a></li>
+                    <li><a href="" class="footer__link">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">My Accout</h3>
+                <ul class="footer__links">
+                    <li><a href="" class="footer__link">Sign In</a></li>
+                    <li><a href="" class="footer__link">View Cart</a></li>
+                    <li><a href="" class="footer__link">My Wishlist</a></li>
+                    <li><a href="" class="footer__link">Track My Order</a></li>
+                    <li><a href="" class="footer__link">Help</a></li>
+                </ul>
+            </div>
+            <div class="footer__content">
+                <h3 class="footer__title">Secured Payment Gateways</h3>
+                <img src="./img/payment_method.png" alt="" class="payment__img">
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
+            <span class="designer">Designed By Mariam Rusishvili</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- ===== SWIPER JS ====  -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const countryDropdown = document.getElementById('countryDropdown');
+      
+        // Fetch data from REST Countries API
+        fetch('https://restcountries.com/v3.1/all')
+          .then(response => response.json())
+          .then(countries => {
+            countries.forEach(country => {
+              const option = document.createElement('option');
+              option.value = country.cca2; // Use country code as value
+              option.textContent = country.name.common; // Display country name
+              countryDropdown.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error fetching countries:', error));
+      </script>
+ <script>
+    const dropdown = document.getElementById('country_code');
+
+    fetch('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')
+      .then(response => {
+        if (!response.ok) throw new Error(`Network error: ${response.status}`);
+        return response.json();
+      })
+      .then(data => {
+        // Populate the dropdown
+        data.forEach(country => {
+          const option = document.createElement('option');
+          option.value = country.dial_code; // Set dial_code as the value
+          option.textContent = `${country.name} (${country.dial_code})`; // Full display
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching country codes:', error);
+      });
+
+    // Event listener to update display after selection
+    dropdown.addEventListener('change', () => {
+      const selectedValue = dropdown.value; // Get the selected value
+      if (selectedValue) {
+        // Change dropdown content to show only the selected code
+        const tempOption = document.createElement('option');
+        tempOption.value = selectedValue;
+        tempOption.textContent = selectedValue; // Show only the code
+        tempOption.selected = true; // Mark as selected
+
+        // Clear existing options and replace with the single selected option
+        dropdown.innerHTML = '';
+        dropdown.appendChild(tempOption);
+      }
+    });
+  </script>
+
+    <!-- ===== MAIN JS ====  -->
+     <script src="./JS/main.js"></script>
+     <script src="/JS/login.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           <!-- ---FLATICONS--- -->
+           <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+           <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+           <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+           <!-- ---SWIPER --- -->
+           <link
+           rel="stylesheet"
+           href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+           <!-- ---CSS--- -->
+           <link rel="stylesheet" href="css/styles.css">
+           <title>Cart - Little Dreams</title>
+</head>
+<body>
+        <!-- ===== HEADER ====  -->
+        <header class="header">
+            <div class="header__top">
+                <div class="header__container container">
+                    <div class="header__contact">
+                        <span>(+48) - 1234 -5678</span>
+    
+                        <span>Our Location</span>
+                    </div>
+                    <p class="header__alert-news">Rare Collection Models</p>
+                    <a href="login-register.html" class="header__top-action">
+                        <img src="./img/user.png" alt="User_logo" width="20" height="20"  style="margin-right: 8px; position: relative; top: 2px;">
+                        Log in / Sign Up
+                    </a>
+                </div>
+            </div>
+    
+            <nav class="nav container">
+                <a href="index.html" class="nav__logo">
+                    <img src="./img/logo.png" alt="" class="nav__logo-img">
+                </a>
+    
+                <div class="nav__menu" id="nav-menu"> 
+                    <ul class="nav__list">
+                           <li class="nav__item language">
+                            <span class="nav__link">Language</span>
+                            <ul class="language-menu">
+                                <li><a href="index.html" class="nav__link">English</a></li>
+                                <li><a href="russian.html" class="nav__link">Russian</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav__item">
+                            <a href="index.html" class="nav__link active-link">Home</a>
+                        </li>
+    
+                        <li class="nav__item">
+                            <a href="shop.html" class="nav__link">Shop</a>
+                        </li>
+    
+                        <li class="nav__item">
+                            <a href="accounts.html" class="nav__link">My Account</a>
+                        </li>
+                     
+                    </ul>
+    
+                    <div class="header__search">
+                        <input type="text" placeholder="Search for items..." class="form__input">
+                        
+                        <button class="search__btn">
+                            <img src="./img/search.png" alt="">
+                        </button>
+                    </div>
+                </div>
+    
+                <div class="header__user-actions">
+                    <a href="wishlist.html" class="header__action-btn_Wishlist">
+                        <img src="./img/wishlist.png" alt="Wishlist">
+                        <span class="count">3</span>
+                    </a>
+    
+                    <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                        <img src="./img/cart.png" alt="Cart">
+                        <span class="count">3</span>
+                    </a>
+                </div>
+            </nav>
+            </header>
+
+            <!-- ===== BREADCRUMB ====  -->
+            <section class="breadcrumb">
+                <ul class="breadcrumb__list flex container">
+                    <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Shop</span></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Cart</span></li>
+                 </ul>
+             </section>
+
+
+            <!-- ===== CART ====  -->
+             <section class="cart section--lg container">
+                <div class="table__container">
+                    <table class="table">
+                        <tr>
+                           <th>Image</th>
+                           <th>Name</th>
+                           <th>Price</th>
+                           <th>Quantity</th>
+                           <th>Subtotal</th>
+                           <th>Remove</th> 
+                        </tr>
+                        <!-- <tr>
+                           <td>
+                            <img src="./img/car 1.png" alt="" class="table__img">
+                        </td>
+
+                           <td>
+                            <h3 class="table__title">1955 Mercedes-benz 300SL Gullwing</h3>
+                            <p class="table__description">
+                                It is a long established fact that a reader will be distracted by the readable
+                            </p>
+                        </td>
+
+                        <td><span class="table__price">$40</span></td>
+                        <td><input type="number" class="quantity" value="1"></td>
+
+                        <td><span class="table__subtotal">$40</span></td>
+
+                        <td><i class="fi fi-rs-trash table__trash"></i></td>
+                        </tr>
+                        <tr>
+                            <td>
+                             <img src="./img/car 2.png" alt="" class="table__img">
+                         </td>
+ 
+                            <td>
+                             <h3 class="table__title">1955 Mercedes-benz 300SL Gullwing</h3>
+                             <p class="table__description">
+                                 It is a long established fact that a reader will be distracted by the readable
+                             </p>
+                         </td>
+ 
+                         <td><span class="table__price">$40</span></td>
+                         <td><input type="number" class="quantity" value="1"></td>
+ 
+                         <td><span class="table__subtotal">$40</span></td>
+ 
+                         <td><i class="fi fi-rs-trash table__trash"></i></td>
+                         </tr>
+                         <tr>
+                            <td>
+                             <img src="./img/car 3.png" alt="" class="table__img">
+                         </td>
+ 
+                            <td>
+                             <h3 class="table__title">1955 Mercedes-benz 300SL Gullwing</h3>
+                             <p class="table__description">
+                                 It is a long established fact that a reader will be distracted by the readable
+                             </p>
+                         </td>
+ 
+                         <td><span class="table__price">$40</span></td>
+                         <td><input type="number" class="quantity" value="1"></td>
+ 
+                         <td><span class="table__subtotal">$40</span></td>
+ 
+                         <td><i class="fi fi-rs-trash table__trash"></i></td>
+                         </tr> -->
+                            <tbody id="cartTableDynamic"></tbody>
+                            <tbody id="cartTable"></tbody>
+                    </table>
+                </div>
+
+                <div class="cart__actions">
+                    <a href="./checkout.html" class="btn flex btn--md">
+                        <i class="fi-rs-shuffle"></i> Proceed to Checkout
+                    </a>
+                    <a href="./shop.html" class="btn flex btn--md">
+                        <i class="fi-rs-shopping-bag"></i> Continue Shopping
+                    </a>
+                </div>
+
+                <div class="divider">
+                    <i class="fi fi-rs-fingerprint"></i>
+                </div>
+                <script>// Load cart items on page load
+                    document.addEventListener("DOMContentLoaded", function () {
+                      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                      const cartTable = document.querySelector("#cartTable");
+                    
+                      cart.forEach((item) => {
+                        const row = document.createElement("tr");
+                    
+                        row.innerHTML = `
+                          <td>
+                            <img src="${item.image}" alt="${item.name}" class="table__img">
+                          </td>
+                          <td>
+                            <h3 class="table__title">${item.name}</h3>
+                            <p class="table__description">It is a long established fact that a reader will be distracted by the readable.</p>
+                          </td>
+                          <td><span class="table__price">$${item.price}</span></td>
+                          <td><input type="number" class="quantity" value="${item.quantity}" data-id="${item.id}" onchange="updateQuantity(this)"></td>
+                          <td><span class="table__subtotal">$${item.price * item.quantity}</span></td>
+                          <td><i class="fi fi-rs-trash table__trash" data-id="${item.id}" onclick="removeFromCart(this)"></i></td>
+                        `;
+                    
+                        cartTable.appendChild(row);
+                      });
+                    });
+                    
+                    // Update product quantity
+                    function updateQuantity(input) {
+                      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                      const product = cart.find((item) => item.id === input.getAttribute("data-id"));
+                      
+                      if (product) {
+                        product.quantity = parseInt(input.value, 10) || 1; // Default to 1 if invalid
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        location.reload(); // Reload to update totals
+                      }
+                    }
+                    
+                    // Remove product from cart
+                    function removeFromCart(icon) {
+                      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                      cart = cart.filter((item) => item.id !== icon.getAttribute("data-id"));
+                      localStorage.setItem("cart", JSON.stringify(cart));
+                      location.reload(); // Reload to update cart
+                    }
+                    </script>
+                    
+             </section>
+             
+     <!-- ===== NEWSLETTER ====  -->
+     <section class="newsletter section home__newsletter">
+        <div class="newsletter__container container grid">
+            <h3 class="newsletter__title flex">
+                <img src="./img/email.png" alt="" class="newsletter__icon">
+                Sign Up For Newsletter
+            </h3>
+            <p class="newsletter__description">...and receive $20 coupon for first shopping.</p>
+            <form action="https://formsubmit.co/mariamrusishvili2004@gmail.com" method="POST" class="newsletter__form"><input type="email" name="email" placeholder="Enter your Email" class="newsletter__input">
+            <button type="submit" class="newsletter__btn">Subscribe</button></form>
+        </div>
+     </section>
+
+             <!-- ===== FOOTER ====  -->
+                <footer class="footer container">
+            <div class="footer__container grind">
+                <div class="footer__content">
+                    <a href="index.html" class="footer__logo">
+                        <img src="./img/logo.png" alt="" class="footer__logo-img">
+                    </a>
+                    <h4 class="footer__subtitle-contact">Contact</h4>
+    
+                    <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
+                    <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
+    
+                    <div class="footer__social">
+                        <h4 class="footer__subtitle">Follow Me</h4>
+                        <div class="footer__social-links flex">
+                            <a href=""><img src="./img/facebook.png" alt="" class="footer__social-icon"></a>
+                            <a href=""><img src="./img/instagram.png" alt="" class="footer__social-icon"></a>
+                            <a href=""><img src="./img/youtube.png" alt="" class="footer__social-icon"></a>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+    
+                <div class="footer__content">
+                    <h3 class="footer__title">Address</h3>
+                    <ul class="footer__links">
+                        <li><a href="" class="footer__link">About Us</a></li>
+                        <li><a href="" class="footer__link">Delivery Information</a></li>
+                        <li><a href="" class="footer__link">Privacy Policy</a></li>
+                        <li><a href="" class="footer__link">Terms & Conditions</a></li>
+                        <li><a href="" class="footer__link">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h3 class="footer__title">My Accout</h3>
+                    <ul class="footer__links">
+                        <li><a href="" class="footer__link">Sign In</a></li>
+                        <li><a href="" class="footer__link">View Cart</a></li>
+                        <li><a href="" class="footer__link">My Wishlist</a></li>
+                        <li><a href="" class="footer__link">Track My Order</a></li>
+                        <li><a href="" class="footer__link">Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h3 class="footer__title">Secured Payment Gateways</h3>
+                    <img src="./img/payment_method.png" alt="" class="payment__img">
+                </div>
+            </div>
+    
+            <div class="footer__bottom">
+                <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
+                <span class="designer">Designed By Mariam Rusishvili</span>
+            </div>
+                </footer>
+
+    <!-- ===== SWIPER JS ====  -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- ===== MAIN JS ====  -->
+     <script src="./JS/main.js"></script>
+
+    
+</body>
+</html>
