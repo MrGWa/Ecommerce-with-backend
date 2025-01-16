@@ -69,7 +69,7 @@
                     </li>
 
                     <li class="nav__item">
-                        <a href="shop.html" class="nav__link">Shop</a>
+                        <a href="{%url 'core:shop'%}" class="nav__link">Shop</a>
                     </li>
 
                     <li class="nav__item">
@@ -121,7 +121,7 @@
                 <span class="home__subtitle">Hot Promotions</span>
                 <h1 class="home__title">1 in the World <span>Handmade Models!</span></h1>
                 <p class="home__description">Shipping all around the World</p>
-                <a href="shop.html" class="btn">Shop Now</a>
+                <a href="{%url 'core:shop'%}" class="btn">Shop Now</a>
             </div>
             <img src="{% static 'assets/img/home_img.png' %}" alt="" class="home__img">
         </div>
@@ -139,7 +139,7 @@
                 <div class="products__container grid">
                     <div class="product__item">
                         <div class="product__banner">
-                            <a href="details.html" class="product__images">
+                            <a href="#" class="product__images">
                                 <img src="{% static 'assets/img/car 1.png' %}" alt="" class="product__img default">
                                 <img src="{% static 'assets/img/car 1 revert.png' %}" alt="" class="product__img hover">
                             </a>
@@ -186,12 +186,13 @@
                              </a>
                         </div>
                     </div>
+                    {%for p in products%}
 
                     <div class="product__item">
                         <div class="product__banner">
-                            <a href="details.html" class="product__images">
-                                <img src="{% static 'assets/img/car 2.png' %}" alt="" class="product__img default">
-                                <img src="{% static 'assets/img/car 2 revert.png' %}" alt="" class="product__img hover">
+                            <a href="#" class="product__images">
+                                <img src="{{p.image.url}}" alt="" class="product__img default">
+                                <img src="{{p.image.url}}" alt="" class="product__img hover">
                             </a>
                         
                             <div class="product__actions">
@@ -206,13 +207,14 @@
                             </a>
                             </div>
 
-                            <div class="product__badge light-green">Hot</div>
+                            <div class="product__badge light-orange">-{{p.get_precentage|floatformat}}%</div>
                         </div>
                         <div class="product__content">
-                            <span class="product__category">1:43 model</span>
-                            <a href="details.html">
-                                <h3 class="product__title">Assembly Line 2020 Chevrolet Corvette Stingray Coupe</h3>  
+                            <span class="product__category">{{p.category.title}}</span>
+                            <a href="#">
+                                <h3 class="product__title" style="min-height: 3rem;">{{p.title}}</h3>  
                             </a>
+                            <span> by <a href="vendor.html" class="vendor" style="text-decoration: none; font-weight: 480; color: hsl(20, 49%, 42%);">{{p.vendor.title}}</a></span>
                             <div class="product__rating">
                                 <i class="fi fi-rs-star"></i>
                                 <i class="fi fi-rs-star"></i> 
@@ -221,8 +223,8 @@
                                 <i class="fi fi-rs-star"></i> 
                             </div>
                             <div class="product__price flex">
-                                <span class="new__price">20.00$</span>
-                                <span class="old__price">55.00$</span>
+                                <span class="new__price">{{p.price}}$</span>
+                                <span class="old__price">{{p.old_price}}$</span>
                             </div>
                             <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
                                 <button 
@@ -237,9 +239,11 @@
                         </div>
                     </div>
 
+                    {%endfor%}
+
                     <div class="product__item">
                         <div class="product__banner">
-                            <a href="details.html" class="product__images">
+                            <a href="#" class="product__images">
                                 <img src="{% static 'assets/img/car 3.png' %}" alt="" class="product__img default">
                                 <img src="{% static 'assets/img/car 3 revert.png' %}" alt="" class="product__img hover">
                             </a>
@@ -260,7 +264,7 @@
                         </div>
                         <div class="product__content">
                             <span class="product__category">1:43 model</span>
-                            <a href="details.html">
+                            <a href="#">
                                 <h3 class="product__title">Mercedes 190 SL W121 Roadster</h3>  
                                 <br>
                             </a>

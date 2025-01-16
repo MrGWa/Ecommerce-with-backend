@@ -119,9 +119,19 @@ input {
     gap: 1.5rem;
 }
 
+.section {
+    padding-block: 2rem;
+}
+
 .section--lg {
     padding-block: 4ram;
 }
+
+.section__title {
+    font-size:  var(--h4-font-size);
+    margin-bottom: 1.5rem;
+}
+
 
 .form__input {
     border:  1px solid var(--border-color-alt);
@@ -578,7 +588,59 @@ input {
    bottom: 1.6rem;
    right: 1.25rem;
 }
+/* -------------------- CATEGORIES--------------------- */
+.categories__container {
+    overflow: hidden;
+}
 
+.category__item {
+    text-align: center;
+    border: 1px solid var(--border-color);
+    padding: .625rem .635rem 1.25rem;
+    border-radius: 1.25rem;
+}
+
+.category__img {
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.category__title {
+    color: var(--text-color);
+    font-size: var(--small-font-size);
+}
+
+/*Swiper Class*/
+.swiper {
+    overflow: initial;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after{
+    content: '';
+}
+.swiper-button-next,
+.swiper-button-prev {
+    top: -1rem;
+    transform: translateY(-50%);
+    background-color: var(--first-color-alt);
+    border: 1px solid var(--border-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--first-color);
+    font-size: var(--tiny-font-size);
+    position: absolute;
+}
+
+.swiper-button-prev{
+    left: initial;
+    right: 2.5rem;
+}
+
+.swiper-button-next{
+    right: 0;
+}
 /* -------------------- ACTIVE TAB --------------------- */
 .tab__btn.active-tab {
     color: var(--first-color);
@@ -987,6 +1049,8 @@ input {
 .review__data {
     font-size: var(--small-font-size);
 }
+
+
 
 .review__form-title {
     font-size: var(--large-font-size);
@@ -1439,46 +1503,6 @@ input {
 
   .payment__btn:hover {
     background-color: var(--first-color);
-}
-
-/* -------------------- ALARTS --------------------- */
-
-
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-
-.alert-success {
-    color: #155724;
-    background-color: #c3e6cb;
-    border-color: #c3e6cb;
-}
-
-.alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-.alert-error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-.alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-}
-
-.alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
 }
 
 

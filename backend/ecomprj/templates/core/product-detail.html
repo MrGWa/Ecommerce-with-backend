@@ -1,0 +1,345 @@
+{%load static%} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- ---CSS--- -->
+     <link rel="stylesheet" href="{%static 'assets/CSS/styles.css'%}">
+     <title>Product Details</title>
+
+     <!-- ---FLATICONS--- -->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+
+
+     
+</head>
+<body>
+        <!-- ===== HEADER ====  -->
+        <header class="header">
+        <div class="header__top">
+            <div class="header__container container">
+                <div class="header__contact">
+                    <span>(+48) - 1234 -5678</span>
+
+                    <span>Our Location</span>
+                </div>
+                <p class="header__alert-news">Rare Collection Models</p>
+                <div class="account__panel">
+                    <img src="{% static 'assets/img/user.png' %}" alt="User_logo" width="20" class="account" height="20" style="margin-right: 8px; position: relative; top: 2px;">
+                    <span>Account</span>
+                    <ul class="account__dropdown">
+                        <li><a href="page-account.html" class="nav__link"><i class="fi fi-rr-user"> My Account </i></a></li>
+                        <li><a href="page-account.html" class="nav__link"><i class=
+                            "fi fi-rs-truck-check"
+                            > Order Tracking </i></a></li>
+                        <li><a href="page-account.html" class="nav__link"><i class="fi fi-rs-settings"> Setting</i></a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{%url 'userauths:sign-out'%}" class="nav__link"><i class=
+                            "fi fi-rr-exit"> Sign out</i></a></li>
+                        
+                        {%else%}
+                        <li><a href="{%url 'userauths:sign-in'%}" class="nav__link"><i class=
+                            "fi fi-rr-exit"> Sign In</i></a></li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav container">
+            <a href="{%url 'core:index'%}"  class="nav__logo">
+                <img src="{% static 'assets/img/logo.png' %}" alt="" class="nav__logo-img">
+            </a>
+
+            <div class="nav__menu" id="nav-menu"> 
+                <ul class="nav__list">
+                       <li class="nav__item language">
+                        <span class="nav__link">Language</span>
+                        <ul class="language-menu">
+                            <li><a href="{%url 'core:index'%}" class="nav__link">English</a></li>
+                            <li><a href="russian.html" class="nav__link">Russian</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{%url 'core:index'%}" class="nav__link active-link">Home</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="{%url 'core:shop'%}" class="nav__link">Shop</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="accounts.html" class="nav__link">My Account</a>
+                    </li>
+                 
+                </ul>
+
+                <div class="header__search">
+                    <input type="text" placeholder="Search for items..." class="form__input">
+                    
+                    <button class="search__btn">
+                        <img src="{% static 'assets/img/search.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <div class="header__user-actions">
+                <a href="wishlist.html" class="header__action-btn_Wishlist">
+                    <img src="{% static 'assets/img/wishlist.png' %}" alt="Wishlist">
+                    <span class="count">3</span>
+                </a>
+
+                <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                    <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
+                    <span class="count">3</span>
+                </a>
+            </div>
+        </nav>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <script>
+            setTimeout (() => {
+                $(".alert").alert('close');
+            }, 3)
+        </script>
+        </header>
+
+        <!-- ===== BREADCRUMB ====  -->
+        <section class="breadcrumb">
+                <ul class="breadcrumb__list flex container">
+                    <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Model</span></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">{{product.title}}</span></li>
+                </ul>
+             </section>
+
+        <!-- ===== DETAILS ====  -->
+         <section class="details section--lg">
+            <div class="details__container container grid">
+                <div class="details__group">
+                    <img src="{{product.image.url}}" alt="" class="details__img">
+
+                    {% for p in p_image %}
+                    <div class="details__small-images grind">
+                        <img src="{{p.images.url}}" alt="" class="details__small-img">
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="details__group">
+                    <h3 class="details__title">{{product.title}}</h3>
+
+                    <div class="details__price flex">
+                        <span class="new__price">{{product.price}}</span>
+                        <span class="old__price">{{product.old_price}}</span>
+                        <span class="save__price">{{product.get_precentage|floatformat:0}}% off</span>
+                    </div>
+
+                    <p class="short__description">
+                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+                    </p>
+
+                    <ul class="product__list">
+                        <li class="list__item flex">
+                            <i class="fi-rs-truck-check"></i> Deliver Worldwide
+                        </li>
+                        <li class="list__item flex">
+                            <i class="fi-rs-refresh"></i> In case of damage, return within 30 days
+                        </li>
+                    </ul>
+                    
+                    <div class="details__action">
+                        <input type="number" class="quantity" value="1">
+
+                        <a href="" class="btn btn--sm">Add to cart</a>
+
+                        <a href="" class="details__action-btn"><i class="fi fi-rs-heart"></i></a>
+                    </div>
+
+                    <ul class="details__meta">
+                        <li class="meta__list flex"><span>Tags:</span>{%for tag in product.tags.all %}<a href="{%url 'core:tag' tag.slug%}" style="text-decoration: none; color: hsl(0, 5%, 44%);">#{{tag.name}}</a>{%endfor%}</li>
+                        <li class="meta__list flex"><span>Availability:</span> {{product.stock_count}} Items In Stock</li>
+                    </ul>
+                </div>
+            </div>
+         </section>
+
+         <!-- ===== DETAILS TAB ====  -->
+          <section class="details__tab container">
+            <div class="details__tab">
+                <span class="detail__tab" data-target = #reviews>({{reviews.count}}) Reviews</span>
+            </div>
+            <div class="details__tabs-content">
+                <div class="details__tab-content" content id="rewiews">
+                    <div class="rewiews__container grid">
+                        {%for r in reviews%}
+                        <div class="review__single">
+                            <div>
+                              <div class="review__img"><i class="fi fi-ts-circle-user"></i></div>
+                              <h4 class="review__title">{{r.user.username|title}}</h4>
+                            </div>
+                            
+                            <div class="review__data">
+                                <div class="review__rating">
+                                    {% for star in r.rating|ljust:r.rating %}
+                                    <i class="fi fi-rs-star" style="position: grid;"></i>
+                                    {%endfor%}
+                                </div>
+                                
+                                <p class="review__description">{{r.review}}</p>
+
+                                <span class="review__date">{{r.date|date:"d M, Y"}}</span>
+                            </div>
+                        </div>
+                        {%endfor%}
+                        <div class="review__single">
+                            <div>
+                                <div class="review__img"><i class="fi fi-ts-circle-user"></i></div>
+                              <h4 class="review__title">Mark Specter</h4>
+                            </div>
+                            <div class="review__data">
+                                <div class="review__rating">
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                </div>
+                                <p class="review__description">Deliverd perfectly with no damage</p>
+
+                                <span class="review__date">November 21, 2024 at 5:18 pm</span>
+                            </div>
+                        </div>
+                        <div class="review__single">
+                            <div>
+                                <div class="review__img"><i class="fi fi-ts-circle-user"></i></div>
+                              <h4 class="review__title">Anton Chiklav</h4>
+                            </div>
+                            <div class="review__data">
+                                <div class="review__rating">
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                    <i class="fi fi-rs-star"></i>
+                                </div>
+                                <p class="review__description">Very beautiful product</p>
+
+                                <span class="review__date">September 11, 2024 at 8:40 pm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review__form">
+                        <h4 class="review__form-title">Add your review</h4>
+
+                       
+                         <style></style>
+
+                         <form action="{% url 'core:ajex-add-review' product.id %}" class="form grid" style="padding: 2rem;" id = "commentForm" method="POST">
+                            {%csrf_token%}
+                            {{review_form.review}}
+                        <div class="form__group grid">
+                        </div>
+                        <div class="rate__product" style="background-color: transparent; border: none; padding: 10px;">
+                            {{ review_form.rating}}
+                         </div>
+
+                        <div class="form__btn">
+                            <button class="btn">Submit</button>
+                        </div>
+                    
+                    </form>
+                    </div>
+                </div>
+            </div>
+          </section>
+      <!-- ===== NEWSLETTER ====  -->
+      <section class="newsletter section home__newsletter">
+        <div class="newsletter__container container grid">
+            <h3 class="newsletter__title flex">
+                <img src="{% static 'assets/img/email.png' %}" alt="" class="newsletter__icon">
+                Sign Up For Newsletter
+            </h3>
+            <p class="newsletter__description">...and receive $20 coupon for first shopping.</p>
+            <form action="https://formsubmit.co/mariamrusishvili2004@gmail.com" method="POST" class="newsletter__form"><input type="email" name="email" placeholder="Enter your Email" class="newsletter__input">
+            <button type="submit" class="newsletter__btn">Subscribe</button></form>
+        </div>
+     </section>
+</main>
+
+                <!-- ===== FOOTER ====  -->
+                <footer class="footer container">
+                    <div class="footer__container grind">
+                        <div class="footer__content">
+                            <a href="{%url 'core:index'%}" class="footer__logo">
+                                <img src="{% static 'assets/img/logo.png' %}" alt="" class="footer__logo-img">
+                            </a>
+                            <h4 class="footer__subtitle-contact">Contact</h4>
+            
+                            <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
+                            <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
+            
+                            <div class="footer__social">
+                                <h4 class="footer__subtitle">Follow Me</h4>
+                                <div class="footer__social-links flex">
+                                    <a href=""><img src="{% static 'assets/img/facebook.png' %}" alt="" class="footer__social-icon"></a>
+                                    <a href=""><img src="{% static 'assets/img/instagram.png' %}" alt="" class="footer__social-icon"></a>
+                                    <a href=""><img src="{% static 'assets/img/youtube.png' %}" alt="" class="footer__social-icon"></a>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+            
+                        <div class="footer__content">
+                            <h3 class="footer__title">Address</h3>
+                            <ul class="footer__links">
+                                <li><a href="" class="footer__link">About Us</a></li>
+                                <li><a href="" class="footer__link">Delivery Information</a></li>
+                                <li><a href="" class="footer__link">Privacy Policy</a></li>
+                                <li><a href="" class="footer__link">Terms & Conditions</a></li>
+                                <li><a href="" class="footer__link">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer__content">
+                            <h3 class="footer__title">My Accout</h3>
+                            <ul class="footer__links">
+                                <li><a href="" class="footer__link">Sign In</a></li>
+                                <li><a href="" class="footer__link">View Cart</a></li>
+                                <li><a href="" class="footer__link">My Wishlist</a></li>
+                                <li><a href="" class="footer__link">Track My Order</a></li>
+                                <li><a href="" class="footer__link">Help</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer__content">
+                            <h3 class="footer__title">Secured Payment Gateways</h3>
+                            <img src="{% static 'assets/img/payment_method.png' %}" alt="" class="payment__img">
+                        </div>
+                    </div>
+            
+                    <div class="footer__bottom">
+                        <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
+                        <span class="designer">Designed By Mariam Rusishvili</span>
+                    </div>
+                  </footer>
+            
+            <!-- ===== SWIPER JS ====  -->
+            
+            <!-- ===== MAIN JS ====  -->
+            <script src="{% static 'assets/JS/main.js' %}"></script>
+            <script src="{% static 'assets/JS/function.js' %}"></script>
+            </body>
+            </html>

@@ -2,6 +2,7 @@ from django.db import models
 from shortuuid.django_fields import ShortUUIDField
 from django.utils.html import mark_safe
 from userauths.models import User
+from taggit.managers import TaggableManager
 
 
 STATUS_CHOICE = (
@@ -48,6 +49,15 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     
+# class Tags(models.Model):
+#     tid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="tag", alphabet="abcdefghijklmnop1234567890")
+#     name = models.CharField(max_length=100, unique=True, default="Default Tag")
+
+#     class Meta:
+#         verbose_name_plural = "Tags"
+
+#     def __str__(self):
+#         return self.name
 class Tags(models.Model):
     tid = ShortUUIDField(unique=True, length=10, max_length=20, prefix="tag", alphabet="abcdefghijklmnop1234567890")
     name = models.CharField(max_length=100, unique=True, default="Default Tag")
@@ -65,8 +75,8 @@ class Vendor(models.Model):
     image = models.ImageField(upload_to = user_directory_path)
     description = models.TextField(null = True, blank = True)
 
-    address = models.CharField(max_length = 100, default = '123')
-    address = models.CharField(max_length = 100, default = '+123')
+    address = models.CharField(max_length = 100, default = 'something street 123')
+    contact = models.CharField(max_length = 100, default = '+123')
     chat_resp_time = models.CharField(max_length = 100, default = '0')
     shipping_on_time = models.CharField(max_length = 100, default = '0')
     authentic_rating = models.CharField(max_length = 100, default = '0')
@@ -89,7 +99,9 @@ class Product(models.Model):
     pid = ShortUUIDField(unique = True, length = 10, max_length=20, alphabet = 'abcdefghijklmnop1234567890')
 
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, related_name="user")
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='category')
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name='vendor')
+
 
     title = models.CharField(max_length = 100)
     image = models.ImageField(upload_to = "category")
@@ -99,7 +111,9 @@ class Product(models.Model):
     old_price = models.DecimalField(max_digits= 30000000000, decimal_places=2)
 
     specifications = models.TextField(null = True, blank = True)
-    tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True, related_name="products", default=1)
+    tags = TaggableManager(blank = True)
+    #tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True, related_name="products", default=1)
+    stock_count = models.IntegerField(default = '3')
 
     product_status = models.CharField(choices=STATUS, max_length=10, default="in_review")
 
@@ -130,7 +144,7 @@ class Product(models.Model):
     
 class ProductImages(models.Model):
     images = models.ImageField(upload_to="products-images")
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="p_image")
     date = models.DateTimeField(auto_now_add= True)
 
     class Meta:
@@ -146,6 +160,7 @@ class CartOrder(models.Model):
     paid_status = models.BooleanField (default=False)
     order_date = models.DateTimeField(auto_now_add= True)
     product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default="proccessing")
+    
 
     class Meta:
         verbose_name_plural = "Cart Order"
@@ -176,7 +191,7 @@ class CartOrderItems(models.Model):
 
 class ProductReview(models.Model):
      user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True)
-     product = models.ForeignKey(Product, on_delete= models.SET_NULL, null= True)
+     product = models.ForeignKey(Product, on_delete= models.SET_NULL, null= True, related_name='reviews')
      review = models.TextField()
      rating = models.IntegerField(choices=RATING, default=None)
      date = models.DateTimeField(auto_now_add= True)

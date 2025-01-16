@@ -1,0 +1,375 @@
+{%load static%} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- ---CSS--- -->
+     <link rel="stylesheet" href="{%static 'assets/CSS/styles.css'%}">
+     <title>Little Dreams</title>
+       <!-- ---SWIPER --- -->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
+     <!-- ---FLATICONS--- -->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+     <title>Little Dreams</title>
+
+     
+</head>
+<body>
+     <main>
+        <!-- ===== HEADER ====  -->
+        <header class="header">
+        <div class="header__top">
+            <div class="header__container container">
+                <div class="header__contact">
+                    <span>(+48) - 1234 -5678</span>
+
+                    <span>Our Location</span>
+                </div>
+                <p class="header__alert-news">Rare Collection Models</p>
+                <div class="account__panel">
+                    <img src="{% static 'assets/img/user.png' %}" alt="User_logo" width="20" class="account" height="20" style="margin-right: 8px; position: relative; top: 2px;">
+                    <span>Account</span>
+                    <ul class="account__dropdown">
+                        <li><a href="page-account.html" class="nav__link"><i class="fi fi-rr-user"> My Account </i></a></li>
+                        <li><a href="page-account.html" class="nav__link"><i class=
+                            "fi fi-rs-truck-check"
+                            > Order Tracking </i></a></li>
+                        <li><a href="page-account.html" class="nav__link"><i class="fi fi-rs-settings"> Setting</i></a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{%url 'userauths:sign-out'%}" class="nav__link"><i class=
+                            "fi fi-rr-exit"> Sign out</i></a></li>
+                        
+                        {%else%}
+                        <li><a href="{%url 'userauths:sign-in'%}" class="nav__link"><i class=
+                            "fi fi-rr-exit"> Sign In</i></a></li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav container">
+            <a href="{%url 'core:index'%}"  class="nav__logo">
+                <img src="{% static 'assets/img/logo.png' %}" alt="" class="nav__logo-img">
+            </a>
+
+            <div class="nav__menu" id="nav-menu"> 
+                <ul class="nav__list">
+                       <li class="nav__item language">
+                        <span class="nav__link">Language</span>
+                        <ul class="language-menu">
+                            <li><a href="{%url 'core:index'%}" class="nav__link">English</a></li>
+                            <li><a href="russian.html" class="nav__link">Russian</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{%url 'core:index'%}" class="nav__link">Home</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="{%url 'core:shop'%}" class="nav__link active-link">Shop</a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="accounts.html" class="nav__link">My Account</a>
+                    </li>
+                 
+                </ul>
+
+                <div class="header__search">
+                    <input type="text" placeholder="Search for items..." class="form__input">
+                    
+                    <button class="search__btn">
+                        <img src="{% static 'assets/img/search.png' %}" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <div class="header__user-actions">
+                <a href="wishlist.html" class="header__action-btn_Wishlist">
+                    <img src="{% static 'assets/img/wishlist.png' %}" alt="Wishlist">
+                    <span class="count">3</span>
+                </a>
+
+                <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                    <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
+                    <span class="count">3</span>
+                </a>
+            </div>
+        </nav>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <script>
+            setTimeout (() => {
+                $(".alert").alert('close');
+            }, 3)
+        </script>
+        </header>
+        <!-- ===== MAIN ====  -->
+    <main>
+        <!-- ===== BREADCRUMB ====  -->
+         <section class="breadcrumb">
+            <ul class="breadcrumb__list flex container">
+                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                <li><span class="breadcrumb__link">></span></li>
+                <li><span class="breadcrumb__link">Shop</span></li>
+            </ul>
+         </section>
+           <!-- ===== CATEGORIES ====  -->
+           <section class="categories container section">
+            <h3 class="section__title" style="font-size: 1.75rem; margin-bottom: 0.5rem;">Categories</h3>
+            <div class="categories__container swiper">
+                <div class="swiper-wrapper">
+                    {% for c in categories %}
+                    <a href="{%url 'core:category-product-list' c.cid %}" class="category__item swiper-slide">
+                        <img src="{{ c.image.url }}" style="width: 10rem;" alt="" class="category__img">
+                        <h3 class="category__title">{{ c.title }}</h3>
+                        <p style="text-decoration: none; color: hsl(203 13.8% 65.9%); font-size: 0.80rem;">{{c.category.count}} Product{{c.category.count|pluralize}}</p>
+                    </a>
+                    {% endfor %}
+
+                    <style>
+                        .categories__container {
+    overflow: hidden;
+}
+
+.category__item {
+    text-align: center;
+    border: 1px solid var(--border-color);
+    padding: .625rem .635rem 1.25rem;
+    border-radius: 1.25rem;
+}
+
+.category__img {
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.category__title {
+    color: var(--text-color);
+    font-size: var(--small-font-size);
+}
+
+/*Swiper Class*/
+.swiper {
+    overflow: initial;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after{
+    content: '';
+}
+.swiper-button-next,
+.swiper-button-prev {
+    top: -1rem;
+    transform: translateY(-50%);
+    background-color: var(--first-color-alt);
+    border: 1px solid var(--border-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--first-color);
+    font-size: var(--tiny-font-size);
+    position: absolute;
+}
+
+.swiper-button-prev{
+    left: initial;
+    right: 2.5rem;
+}
+
+.swiper-button-next{
+    right: 0;
+}
+                    </style>
+                </div>
+                <div class="swiper-button-next"><i class="fi fi-rs-angle-right"></i></div>
+                <div class="swiper-button-prev"><i class="fi fi-rs-angle-left"></i></div>
+            </div>
+        </section>
+
+         <!-- ===== PRODUCTS ====  -->
+          <section class="products section--lg container">
+            <h3 style="margin-top: 3rem; margin-bottom: 0.5rem; font-size: 1.75rem;">Products</h3>
+            <div class="products__container grid">
+                {% for p in products %}
+                <div class="product__item">
+                    <div class="product__banner">
+                        <a href="{%url 'core:product-detail' p.pid%}" class="product__images">
+                            <img src="{{p.image.url}}" alt="" class="product__img default">
+                            <img src="{{p.image.url}}" alt="" class="product__img hover">
+                        </a>
+                    
+                        <div class="product__actions">
+                        <a href="#" class="action__btn" aria-label="Quick View">
+                            <i class="fi fi-rr-eye"></i>
+                        </a>
+                        <a href="#" class="action__btn" aria-label="Add To Wishlist">
+                            <i class="fi fi-rr-heart"></i>
+                        </a>
+                        <a href="#" class="action__btn" aria-label="Compare">
+                            <i class="fi fi-rr-shuffle"></i>
+                        </a>
+                        </div>
+
+                        <div class="product__badge light-orange">-{{p.get_precentage|floatformat}}%</div>
+                    </div>
+                    <div class="product__content">
+                        <span class="product__category">{{p.category.title}}</span>
+                        <a href="details.html">
+                            <h3 class="product__title" style="min-height: 3rem;">{{p.title}}</h3>  
+                        </a>
+                        <span> by <a href="vendor.html" class="vendor" style="text-decoration: none; font-weight: 480; color: hsl(20, 49%, 42%);">{{p.vendor.title}}</a></span>
+                        <div class="product__rating">
+                            <i class="fi fi-rs-star"></i>
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                        </div>
+                        <div class="product__price flex">
+                            <span class="new__price">{{p.price}}$</span>
+                            <span class="old__price">{{p.old_price}}$</span>
+                        </div>
+                        <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
+                            <button 
+                            data-id="2" 
+                            data-name="Assembly Line 2020 Chevrolet Corvette Stingray Coupe" 
+                            data-image="assets/img/car 2.png" 
+                            data-price="20" 
+                            onclick="addToCart(this)">
+                            <i class="fi fi-rs-shopping-bag-add"></i>
+                          </button>
+                         </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <ul class="pagination">
+                <li><a href="" class="pagination__link active">01</a></li>
+                <li><a href="" class="pagination__link">02</a></li>
+                <li><a href="" class="pagination__link">03</a></li>
+                <li><a href="" class="pagination__link">04</a></li>
+                <li><a href="" class="pagination__link icon"><i class="fi-rs-angle-double-small-right"></i></a></li>
+            </ul>
+          </section>
+          
+ <!-- ===== NEWSLETTERS ====  -->
+ <section class="newsletter section home__newsletter">
+    <div class="newsletter__container container grid">
+        <h3 class="newsletter__title flex">
+            <img src="{% static 'assets/img/email.png' %}" alt="" class="newsletter__icon">
+            Sign Up For Newsletter
+        </h3>
+        <p class="newsletter__description">...and receive $20 coupon for first shopping.</p>
+        <form action="https://formsubmit.co/mariamrusishvili2004@gmail.com" method="POST" class="newsletter__form"><input type="email" name="email" placeholder="Enter your Email" class="newsletter__input">
+        <button type="submit" class="newsletter__btn">Subscribe</button></form>
+    </div>
+ </section>
+</main>
+
+<!-- ===== FOOTER ====  -->
+<footer class="footer container">
+<div class="footer__container grind">
+    <div class="footer__content">
+        <a href="{%url 'core:index'%}" class="footer__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="" class="footer__logo-img">
+        </a>
+        <h4 class="footer__subtitle-contact">Contact</h4>
+
+        <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
+        <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
+
+        <div class="footer__social">
+            <h4 class="footer__subtitle">Follow Me</h4>
+            <div class="footer__social-links flex">
+                <a href=""><img src="{% static 'assets/img/facebook.png' %}" alt="" class="footer__social-icon"></a>
+                <a href=""><img src="{% static 'assets/img/instagram.png' %}" alt="" class="footer__social-icon"></a>
+                <a href=""><img src="{% static 'assets/img/youtube.png' %}" alt="" class="footer__social-icon"></a>
+                
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="footer__content">
+        <h3 class="footer__title">Address</h3>
+        <ul class="footer__links">
+            <li><a href="" class="footer__link">About Us</a></li>
+            <li><a href="" class="footer__link">Delivery Information</a></li>
+            <li><a href="" class="footer__link">Privacy Policy</a></li>
+            <li><a href="" class="footer__link">Terms & Conditions</a></li>
+            <li><a href="" class="footer__link">Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="footer__content">
+        <h3 class="footer__title">My Accout</h3>
+        <ul class="footer__links">
+            <li><a href="" class="footer__link">Sign In</a></li>
+            <li><a href="" class="footer__link">View Cart</a></li>
+            <li><a href="" class="footer__link">My Wishlist</a></li>
+            <li><a href="" class="footer__link">Track My Order</a></li>
+            <li><a href="" class="footer__link">Help</a></li>
+        </ul>
+    </div>
+    <div class="footer__content">
+        <h3 class="footer__title">Secured Payment Gateways</h3>
+        <img src="{% static 'assets/img/payment_method.png' %}" alt="" class="payment__img">
+    </div>
+</div>
+
+<div class="footer__bottom">
+    <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
+    <span class="designer">Designed By Mariam Rusishvili</span>
+</div>
+</footer>
+ <!-- ---JQUERY--- -->
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="{% static 'assets/JS/main.js' %}"></script>
+<!-- ===== SWIPER JS ====  -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiperCategories = new Swiper(".categories__container", {
+  spaceBetween: 24,
+  loop: true,
+  navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+      640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+      },
+      768: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+      },
+      1400: {
+          slidesPerView: 6,
+          spaceBetween: 24,
+      },
+  },
+});
+    </script>
+
+</body>
+</html>
