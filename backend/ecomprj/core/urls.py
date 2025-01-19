@@ -1,5 +1,5 @@
 from django.urls import path
-from core.views import index, product_list_view, category_product_list_view, vendor_list_view, product_detail_view, tag_list, ajex_add_review
+from core.views import index, product_list_view, category_product_list_view, vendor_list_view, product_detail_view, tag_list, ajax_add_review, search_view, cart_view, add_to_cart
 
 app_name = 'core'
 
@@ -13,9 +13,17 @@ urlpatterns = [
     path("vendors/", vendor_list_view, name="vendor-list"),
 
     #Tags
-    path('product/tag/<slug:tag_slug>/', tag_list, name='tag'),
+    path("tag/<slug:tag_slug>/", tag_list, name="tag"),
 
     #Add Review
-    path("ajex-add-review/<int:pid>/", ajex_add_review, name="ajex-add-review"),
+    path("ajax-add-review/<int:pid>/", ajax_add_review, name="ajax-add-review"),
+
+    #Search
+    path("search/", search_view, name="search"),
+
+    #cart
+    path("add-to-cart/", add_to_cart, name="add-to-cart"),
+    path("cart/", cart_view, name="cart"),
+
 
 ]

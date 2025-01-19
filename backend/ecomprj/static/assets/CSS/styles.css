@@ -343,6 +343,20 @@ input {
     width: 35px;
 }
 
+.cart-items-count{
+    position: absolute;
+    top:  -0.625rem;
+    right: -0.625rem;
+    background-color: var(--first-color);
+    color: var(--body-color);
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: var(--small-font-size);
+}
+
 .header__action-btn_Wishlist .count,
 .header__action-btn_Cart .count {
     position: absolute;

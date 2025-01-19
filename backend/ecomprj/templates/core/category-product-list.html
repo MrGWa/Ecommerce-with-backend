@@ -7,22 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- ---CSS--- -->
      <link rel="stylesheet" href="{%static 'assets/CSS/styles.css'%}">
-     <title>Little Dreams</title>
-       <!-- ---SWIPER --- -->
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
+     <title>Product Details</title>
 
      <!-- ---FLATICONS--- -->
      <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
      <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-     <title>Little Dreams</title>
+
 
      
 </head>
 <body>
-     <main>
         <!-- ===== HEADER ====  -->
         <header class="header">
         <div class="header__top">
@@ -83,13 +78,13 @@
                  
                 </ul>
 
-                <div class="header__search">
-                    <input type="text" placeholder="Search for items..." class="form__input">
+                <form class="header__search" action="{%url 'core:search'%}" method="GET">
+                    <input type="text" placeholder="Search for items..." class="form__input" name="q">
                     
-                    <button class="search__btn">
+                    <button class="search__btn" type="submit">
                         <img src="{% static 'assets/img/search.png' %}" alt="">
                     </button>
-                </div>
+                </form>
             </div>
 
             <div class="header__user-actions">
@@ -100,7 +95,17 @@
 
                 <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
                     <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
-                    <span class="count">3</span>
+                    <span class="cart-items-count" style="position: absolute;
+                    top:  -0.625rem;
+                    right: -0.625rem;
+                    background-color: var(--first-color);
+                    color: var(--body-color);
+                    height: 18px;
+                    width: 18px;
+                    line-height: 18px;
+                    border-radius: 50%;
+                    text-align: center;
+                    font-size: var(--small-font-size);">{{ request.session.cart_data_obj|length }}</span>
                 </a>
             </div>
         </nav>
@@ -112,11 +117,6 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <script>
-            setTimeout (() => {
-                $(".alert").alert('close');
-            }, 3)
-        </script>
         </header>
         <!-- ===== MAIN ====  -->
     <main>
@@ -262,4 +262,5 @@
               </footer>
             
             <script src="{% static 'assets/JS/main.js' %}"></script>
+            <script src="{% static 'assets/JS/function.js' %}"></script>
          

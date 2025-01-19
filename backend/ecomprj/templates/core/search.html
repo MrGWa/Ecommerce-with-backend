@@ -118,45 +118,92 @@
             {% endfor %}
         {% endif %}
         </header>
-          <!-- ===== BREADCRUMB ====  -->
-          <section class="breadcrumb">
+        <!-- ===== MAIN ====  -->
+    <main>
+        <!-- ===== BREADCRUMB ====  -->
+         <section class="breadcrumb">
+            {%if query%}
             <ul class="breadcrumb__list flex container">
-                <li><a href="{%url 'core:index'%}" class="breadcrumb__link">Home</a></li>
+                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
                 <li><span class="breadcrumb__link">></span></li>
-                <li><span class="breadcrumb__link">Sign In</span></li>
-             </ul>
+                <li><span class="breadcrumb__link">Shop</span></li>
+
+                <li><span class="breadcrumb__link">></span></li>
+                <li><span class="breadcrumb__link">{{query.title}}</span></li>
+            </ul>
+            {%else%}
+            <ul class="breadcrumb__list flex container">
+                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                <li><span class="breadcrumb__link">></span></li>
+                <li><span class="breadcrumb__link">Shop</span></li>
+            </ul>
+            {%endif%}
          </section>
-         <!-- ===== LOGIN ====  -->
-         <div class="login-container">
-            <div class="login-left">
-                <h2>Welcome Back</h2>
-                <p>Welcome back, Please enter your details</p>
-                <form method="post" method="POST">
-                    {% csrf_token %}
-                    <label for="email">Email</label>
-                    <input type="text" required="" name="email" placeholder="Please enter your Email *" />
+
+         <!-- ===== PRODUCTS ====  -->
+          <section class="products section--lg container">
+            <h3 style="margin-top: 3rem; margin-bottom: 0.5rem; font-size: 1.75rem;">Products</h3>
+            <p style="margin-top: 1.5rem; margin-bottom: 1.5rem; font-size: 1.2rem; margin-left: 0.5rem; font-weight: 500;"><strong style="color: hsl(355 34.1% 33.3%); font-weight: 600; font-size: 1.25rem;"><u>{{products.count}}</u></strong> product{{products.count|pluralize}} found ...</p>
+            <div class="products__container grid">
+                {% for p in products %}
+                <div class="product__item">
+                    <div class="product__banner">
+                        <a href="{%url 'core:product-detail' p.pid%}" class="product__images">
+                            <img src="{{p.image.url}}" alt="" class="product__img default">
+                            <img src="{{p.image.url}}" alt="" class="product__img hover">
+                        </a>
                     
-                    <label for="password">Password</label>
-                    <input required="" type="password" name="password" placeholder="Enter your password *" />
-                    
-                    <div class="remember-forgot">
-            
-                        <a href="#">Forgot password?</a>
+                        <div class="product__actions">
+                        <a href="#" class="action__btn" aria-label="Quick View">
+                            <i class="fi fi-rr-eye"></i>
+                        </a>
+                        <a href="#" class="action__btn" aria-label="Add To Wishlist">
+                            <i class="fi fi-rr-heart"></i>
+                        </a>
+                        <a href="#" class="action__btn" aria-label="Compare">
+                            <i class="fi fi-rr-shuffle"></i>
+                        </a>
+                        </div>
+
+                        <div class="product__badge light-orange">-{{p.get_precentage|floatformat}}%</div>
                     </div>
-                    
-                    <button type="submit" class="btn-primary" name="login">Sign in</button>
-                    <button type="button" class="btn-secondary">
-                    <img src="{% static 'assets/img/google_logo.png' %}" alt="" style="width: 30px;" id="googleLoginButton"> Sign in with Google
-                    </button>
-                </form>
-                <p class="register">Don't have an account? <a href="{%url 'userauths:sign-up'%}" class="sign-up">Sign up</a></p>
+                    <div class="product__content">
+                        <span class="product__category">{{p.category.title}}</span>
+                        <a href="details.html">
+                            <h3 class="product__title" style="min-height: 3rem;">{{p.title}}</h3>  
+                        </a>
+                        <span> by <a href="vendor.html" class="vendor" style="text-decoration: none; font-weight: 480; color: hsl(20, 49%, 42%);">{{p.vendor.title}}</a></span>
+                        <div class="product__rating">
+                            <i class="fi fi-rs-star"></i>
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                            <i class="fi fi-rs-star"></i> 
+                        </div>
+                        <div class="product__price flex">
+                            <span class="new__price">{{p.price}}$</span>
+                            <span class="old__price">{{p.old_price}}$</span>
+                        </div>
+                        <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
+                            <button 
+                            data-id="2" 
+                            data-name="Assembly Line 2020 Chevrolet Corvette Stingray Coupe" 
+                            data-image="assets/img/car 2.png" 
+                            data-price="20" 
+                            onclick="addToCart(this)">
+                            <i class="fi fi-rs-shopping-bag-add"></i>
+                          </button>
+                         </a>
+                    </div>
+                </div>
+                {% empty %}
+                <h2 style="font-size: 2rem; min-width: 50rem; margin: 2rem;">Searched Product couldn't be Found ...</h2>
+                {% endfor %}
             </div>
-            <div class="login-right">
-                <img src="{% static 'assets/img/logo.png' %}" alt="Logo" class="logo">
-            </div>
-        </div>
-  <!-- ===== NEWSLETTERS ====  -->
-  <section class="newsletter section home__newsletter">
+          </section>
+          
+ <!-- ===== NEWSLETTERS ====  -->
+ <section class="newsletter section home__newsletter">
     <div class="newsletter__container container grid">
         <h3 class="newsletter__title flex">
             <img src="{% static 'assets/img/email.png' %}" alt="" class="newsletter__icon">
@@ -230,6 +277,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script src="{% static 'assets/JS/main.js' %}"></script>
-
+<script src="{% static 'assets/JS/function.js' %}"></script>
 </body>
 </html>

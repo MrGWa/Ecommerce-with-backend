@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from core.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, wishlist, Address, Tags
 from taggit.models import Tag
 from core.forms import ProductReviewForm
 from django.db.models import Avg
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -66,46 +67,99 @@ def product_detail_view(request, pid):
 
     return render(request, 'core/product-detail.html', context)
 
-
 def tag_list(request, tag_slug=None):
-    products = Product.objects.filter(product_status="published", in_stock=True).order_by("-id")
-    tag = None
+
+    products = Product.objects.filter(product_status="published").order_by("-id")
+
+    tag = None 
     if tag_slug:
-        try:
-            tag = Tags.objects.get(name=tag_slug)
-            products = products.filter(tags__in=[tag])
-        except Tags.DoesNotExist:
-            tag = None
-            products = []
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        products = products.filter(tags__in=[tag])
 
     context = {
         "products": products,
-        "tag": tag,
+        "tag": tag
     }
 
-    return render(request, 'core/tag.html', context)
+    return render(request, "core/tag.html", context)
 
-def ajex_add_review(request, pid):
-    product= Product.objects.get(pid=pid)
-    user = request.user
+def ajax_add_review(request, pid):
+    product = Product.objects.get(pk=pid)
+    user = request.user 
 
     review = ProductReview.objects.create(
         user=user,
         product=product,
-        review=request.POST.get('review'),
-        rating=request.POST.get('rating'),
+        review = request.POST['review'],
+        rating = request.POST['rating'],
     )
 
     context = {
-        'user':user.username,
-        'review':request.POST['review'],
-        'rating':request.POST['rating'],
+        'user': user.username,
+        'review': request.POST['review'],
+        'rating': request.POST['rating'],
     }
 
-    avarage_review = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+    average_reviews = ProductReview.objects.filter(product=product).aggregate(rating=Avg("rating"))
 
-    return JsonResponse({
-        'bool': True,
+    return JsonResponse(
+       {
+         'bool': True,
         'context': context,
-        'avarage_review': avarage_review,
+        'average_reviews': average_reviews
+       }
+    )
+
+def search_view(request):
+    query = request.GET.get("q")
+    products = Product.objects.filter(title__icontains=query).order_by("-date")
+    context = {
+        "products": products,
+        "query": query,
+    }
+    return render(request, "core/search.html", context)
+
+def add_to_cart(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+    cart_product = {}
+    cart_product[str(request.POST['id'])] = {
+        'title': request.POST['title'],
+        'qty': request.POST['qty'],
+        'price': request.POST['price'],
+    }
+    
+    if 'cart_data_obj' in request.session:
+        if str(request.POST['id']) in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[str(request.POST['id'])]['qty'] = int(cart_product[str(request.POST['id'])]['qty'])
+            cart_data.update(cart_data)
+            request.session['cart_data_obj'] = cart_data
+        else:
+            cart_data = request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+    else:
+        request.session['cart_data_obj'] = cart_product
+    
+    return JsonResponse({
+        "data": request.session['cart_data_obj'], 
+        'totalcartitems': len(request.session['cart_data_obj'])
     })
+
+def cart_view(request):
+    cart_total_amount = 0
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total_amount += int(item['qty']) * float(item['price'])
+        return render(request, "core/cart.html", {"cart_data":request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
+    else:
+        messages.warning(request, "Your cart is empty")
+        return redirect("core:index")
+    
+
+
+
+
+

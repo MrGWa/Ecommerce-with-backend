@@ -7,17 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- ---CSS--- -->
      <link rel="stylesheet" href="{%static 'assets/CSS/styles.css'%}">
-     <title>Little Dreams</title>
+     <title>Product Details</title>
+
+     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
      <!-- ---FLATICONS--- -->
      <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
      <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-     <title>Little Dreams</title>
+
 
      
 </head>
 <body>
-     <main>
         <!-- ===== HEADER ====  -->
         <header class="header">
         <div class="header__top">
@@ -78,13 +80,13 @@
                  
                 </ul>
 
-                <div class="header__search">
-                    <input type="text" placeholder="Search for items..." class="form__input">
+                <form class="header__search" action="{%url 'core:search'%}" method="GET">
+                    <input type="text" placeholder="Search for items..." class="form__input" name="q">
                     
-                    <button class="search__btn">
+                    <button class="search__btn" type="submit">
                         <img src="{% static 'assets/img/search.png' %}" alt="">
                     </button>
-                </div>
+                </form>
             </div>
 
             <div class="header__user-actions">
@@ -95,11 +97,20 @@
 
                 <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
                     <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
-                    <span class="count">3</span>
+                    <span class="cart-items-count" style="position: absolute;
+                    top:  -0.625rem;
+                    right: -0.625rem;
+                    background-color: var(--first-color);
+                    color: var(--body-color);
+                    height: 18px;
+                    width: 18px;
+                    line-height: 18px;
+                    border-radius: 50%;
+                    text-align: center;
+                    font-size: var(--small-font-size);">{{ request.session.cart_data_obj|length }}</span>
                 </a>
             </div>
         </nav>
-
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{message.tags}}">
@@ -227,12 +238,15 @@
                                 <span class="old__price">{{p.old_price}}$</span>
                             </div>
                             <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
-                                <button 
-                                data-id="2" 
-                                data-name="Assembly Line 2020 Chevrolet Corvette Stingray Coupe" 
-                                data-image="assets/img/car 2.png" 
-                                data-price="20" 
-                                onclick="addToCart(this)">
+                                <input type="hidden" value="1" id="product-quantity-{{ prduct.id }}" class="product-quantity-{{ prduct.id }}">
+                                <input type="hidden" class="product-pid-{{ product.id }}" value="{{ prduct.pid }}">
+                                <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
+                                <input type="hidden" class="product-id-{{ prduct.id }}" value="{{ product.id }}">
+                                <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
+
+
+                                <button class="add add-to-cart-btn" data-index="{{ product.id }}" id="add-to-cart-btn"></button>
+
                                 <i class="fi fi-rs-shopping-bag-add"></i>
                               </button>
                              </a>
@@ -1310,58 +1324,17 @@
             <span class="designer">Designed By Mariam Rusishvili</span>
         </div>
       </footer>
+      
     
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{% static 'assets/JS/main.js' %}"></script>
+    <script src="{% static 'assets/JS/function.js' %}"></script>
 
      <!-- ---JQUERY--- -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+     
 
 
-
-
-<!-- ---CART--- -->
-    <script>function addToCart(button) {
-        // Get product details
-        const product = {
-          id: button.getAttribute("data-id"),
-          name: button.getAttribute("data-name"),
-          image: button.getAttribute("data-image"),
-          price: button.getAttribute("data-price"),
-          quantity: 1, // Default quantity
-        };
-      
-        // Get the existing cart from localStorage
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      
-        // Check if the product is already in the cart
-        const existingProduct = cart.find((item) => item.id === product.id);
-      
-        if (existingProduct) {
-          // Increase quantity if the product is already in the cart
-          existingProduct.quantity++;
-        } else {
-          // Add new product to the cart
-          cart.push(product);
-        }
-      
-        // Save updated cart to localStorage
-        localStorage.setItem("cart", JSON.stringify(cart));
-      
-        // Update cart count
-        updateCartCount();
-      }
-      window.addToCart = addToCart;
-      console.log("Script loaded") 
-      // Update cart count
-      function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        document.querySelector(".header__action-btn_Cart .count").textContent = cart.length;
-      }
-      
-      // Initialize cart count on page load
-      document.addEventListener("DOMContentLoaded", updateCartCount);</script>
 
 </body>
 </html>

@@ -35,47 +35,6 @@ function imgGallery() {
 imgGallery();
 
 // --------------------CART--------------------------
-// Add product to cart
-function addToCart(button) {
-    // Get product details
-    const product = {
-      id: button.getAttribute("data-id"),
-      name: button.getAttribute("data-name"),
-      image: button.getAttribute("data-image"),
-      price: button.getAttribute("data-price"),
-      quantity: 1, // Default quantity
-    };
-  
-    // Get the existing cart from localStorage
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    // Check if the product is already in the cart
-    const existingProduct = cart.find((item) => item.id === product.id);
-  
-    if (existingProduct) {
-      // Increase quantity if the product is already in the cart
-      existingProduct.quantity++;
-    } else {
-      // Add new product to the cart
-      cart.push(product);
-    }
-  
-    // Save updated cart to localStorage
-    localStorage.setItem("cart", JSON.stringify(cart));
-  
-    // Update cart count
-    updateCartCount();
-  }
-  window.addToCart = addToCart;
-  console.log("Script loaded") 
-  // Update cart count
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    document.querySelector(".header__action-btn_Cart .count").textContent = cart.length;
-  }
-  
-  // Initialize cart count on page load
-  document.addEventListener("DOMContentLoaded", updateCartCount);
 
 
 // --------------------CHECKOUT--------------------------

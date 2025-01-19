@@ -18,6 +18,7 @@
      
 </head>
 <body>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <!-- ===== HEADER ====  -->
         <header class="header">
         <div class="header__top">
@@ -65,11 +66,11 @@
                         </ul>
                     </li>
                     <li class="nav__item">
-                        <a href="{%url 'core:index'%}" class="nav__link active-link">Home</a>
+                        <a href="{%url 'core:index'%}" class="nav__link">Home</a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="{%url 'core:shop'%}" class="nav__link">Shop</a>
+                        <a href="{%url 'core:shop'%}" class="nav__link active-link">Shop</a>
                     </li>
 
                     <li class="nav__item">
@@ -78,13 +79,13 @@
                  
                 </ul>
 
-                <div class="header__search">
-                    <input type="text" placeholder="Search for items..." class="form__input">
+                <form class="header__search" action="{%url 'core:search'%}" method="GET">
+                    <input type="text" placeholder="Search for items..." class="form__input" name="q">
                     
-                    <button class="search__btn">
+                    <button class="search__btn" type="submit">
                         <img src="{% static 'assets/img/search.png' %}" alt="">
                     </button>
-                </div>
+                </form>
             </div>
 
             <div class="header__user-actions">
@@ -95,7 +96,17 @@
 
                 <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
                     <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
-                    <span class="count">3</span>
+                    <span class="cart-items-count" style="position: absolute;
+                    top:  -0.625rem;
+                    right: -0.625rem;
+                    background-color: var(--first-color);
+                    color: var(--body-color);
+                    height: 18px;
+                    width: 18px;
+                    line-height: 18px;
+                    border-radius: 50%;
+                    text-align: center;
+                    font-size: var(--small-font-size);">{{ request.session.cart_data_obj|length }}</span>
                 </a>
             </div>
         </nav>
@@ -107,11 +118,6 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <script>
-            setTimeout (() => {
-                $(".alert").alert('close');
-            }, 3)
-        </script>
         </header>
 
         <!-- ===== BREADCRUMB ====  -->
@@ -161,9 +167,13 @@
                     </ul>
                     
                     <div class="details__action">
-                        <input type="number" class="quantity" value="1">
-
-                        <a href="" class="btn btn--sm">Add to cart</a>
+                        <input type="number" id="product-quantity" class="quantity" value="1">
+                        <input type="hidden" id="product-title" class="product-title" value="{{ product.title }}">
+                        <input type="hidden" id="product-id" value="{{ product.id }}">
+                        
+                        <button class="btn btn--sm" id="add-to-cart-btn" data-product-id="{{ product.id }}" 
+                                data-product-title="{{ product.title }}" 
+                                data-product-price="{{ product.price }}">Add to cart</button>
 
                         <a href="" class="details__action-btn"><i class="fi fi-rs-heart"></i></a>
                     </div>
@@ -241,21 +251,16 @@
                             </div>
                         </div>
                     </div>
-
+                    {% if request.user.is_authenticated %}
                     <div class="review__form">
                         <h4 class="review__form-title">Add your review</h4>
-
-                       
-                         <style></style>
-
-                         <form action="{% url 'core:ajex-add-review' product.id %}" class="form grid" style="padding: 2rem;" id = "commentForm" method="POST">
+                        <strong class="text-success" id="review-res"></strong>
+                         <form action="{% url 'core:ajax-add-review' product.id %}" class="form grid" id="commentForm" method="POST">
                             {%csrf_token%}
                             {{review_form.review}}
                         <div class="form__group grid">
+                            <div class="form__input">{{review_form.rating}}</div>
                         </div>
-                        <div class="rate__product" style="background-color: transparent; border: none; padding: 10px;">
-                            {{ review_form.rating}}
-                         </div>
 
                         <div class="form__btn">
                             <button class="btn">Submit</button>
@@ -263,6 +268,9 @@
                     
                     </form>
                     </div>
+                    {% endif %}
+                    
+
                 </div>
             </div>
           </section>
@@ -339,6 +347,7 @@
             <!-- ===== SWIPER JS ====  -->
             
             <!-- ===== MAIN JS ====  -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="{% static 'assets/JS/main.js' %}"></script>
             <script src="{% static 'assets/JS/function.js' %}"></script>
             </body>
