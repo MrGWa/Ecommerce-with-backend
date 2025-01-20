@@ -1,0 +1,56 @@
+
+        <main id="cart-list">
+           <!-- ===== CART ====  -->
+             <section class="cart section--lg container">
+                <div class="table__container">
+                    <table class="table">
+                        <tr>
+                           <th>Image</th>
+                           <th>Name</th>
+                           <th>Price</th>
+                           <th>Quantity</th>
+                           <th>Subtotal</th>
+                           <th>Remove</th> 
+                        </tr>
+                        {% for product_id, item in cart_data.items %}
+                        <tr>
+                            <td>
+                             <img src="{{item.image}}" alt="" class="table__img">
+                         </td>
+ 
+                            <td>
+                             <h3 class="table__title">{{item.title}}</h3>
+                             <p class="table__description">
+                                 It is a long established fact that a reader will be distracted by the readable
+                             </p>
+                         </td>
+                         <td><span class="table__price">${{item.price|floatformat}}</span></td>
+                        <td><input type="number" class="quantity" value="{{item.qty}}"></td>
+
+                        <td><span class="table__subtotal">${%widthratio item.price 1 item.qty%}</span></td>
+
+                        <td><button class="delete-product" data-product="{{product_id}}"><i class="fi fi-rs-trash table__trash"></i></button></td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+
+                <div class="cart__actions">
+                    <a href="./checkout.html" class="btn flex btn--md">
+                        <i class="fi-rs-shuffle"></i> Proceed to Checkout
+                    </a>
+                    <a href="./shop.html" class="btn flex btn--md">
+                        <i class="fi-rs-shopping-bag"></i> Continue Shopping
+                    </a>
+                </div>
+
+                <div class="divider">
+                    <i class="fi fi-rs-fingerprint"></i>
+                </div>
+             </section>
+        </main>
+             
+
+
+    

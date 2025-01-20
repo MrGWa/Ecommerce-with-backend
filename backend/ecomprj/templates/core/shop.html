@@ -22,6 +22,7 @@
      
 </head>
 <body>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
      <main>
         <!-- ===== HEADER ====  -->
         <header class="header">
@@ -98,7 +99,7 @@
                     <span class="count">3</span>
                 </a>
 
-                <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                <a href="{%url 'core:cart'%}" class="header__action-btn_Cart" id="cartImage">
                     <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
                     <span class="cart-items-count" style="position: absolute;
                     top:  -0.625rem;
@@ -215,12 +216,12 @@
           <section class="products section--lg container">
             <h3 style="margin-top: 3rem; margin-bottom: 0.5rem; font-size: 1.75rem;">Products</h3>
             <div class="products__container grid">
-                {% for p in products %}
+                {% for product in products %}
                 <div class="product__item">
                     <div class="product__banner">
-                        <a href="{%url 'core:product-detail' p.pid%}" class="product__images">
-                            <img src="{{p.image.url}}" alt="" class="product__img default">
-                            <img src="{{p.image.url}}" alt="" class="product__img hover">
+                        <a href="{%url 'core:product-detail' product.pid%}" class="product__images">
+                            <img src="{{product.image.url}}" alt="" class="product__img default">
+                            <img src="{{product.image.url}}" alt="" class="product__img hover">
                         </a>
                     
                         <div class="product__actions">
@@ -235,14 +236,14 @@
                         </a>
                         </div>
 
-                        <div class="product__badge light-orange">-{{p.get_precentage|floatformat}}%</div>
+                        <div class="product__badge light-orange">-{{product.get_precentage|floatformat}}%</div>
                     </div>
                     <div class="product__content">
-                        <span class="product__category">{{p.category.title}}</span>
+                        <span class="product__category">{{product.category.title}}</span>
                         <a href="details.html">
-                            <h3 class="product__title" style="min-height: 3rem;">{{p.title}}</h3>  
+                            <h3 class="product__title" style="min-height: 3rem;">{{product.title}}</h3>  
                         </a>
-                        <span> by <a href="vendor.html" class="vendor" style="text-decoration: none; font-weight: 480; color: hsl(20, 49%, 42%);">{{p.vendor.title}}</a></span>
+                        <span> by <a href="vendor.html" class="vendor" style="text-decoration: none; font-weight: 480; color: hsl(20, 49%, 42%);">{{product.vendor.title}}</a></span>
                         <div class="product__rating">
                             <i class="fi fi-rs-star"></i>
                             <i class="fi fi-rs-star"></i> 
@@ -251,19 +252,20 @@
                             <i class="fi fi-rs-star"></i> 
                         </div>
                         <div class="product__price flex">
-                            <span class="new__price">{{p.price}}$</span>
-                            <span class="old__price">{{p.old_price}}$</span>
+                            <span class="new__price">{{product.price}}$</span>
+                            <span class="old__price">{{product.old_price}}$</span>
                         </div>
                         <a href="#" class="action__btn cart__btn" aria-label="Add To Cart">
-                            <button 
-                            data-id="2" 
-                            data-name="Assembly Line 2020 Chevrolet Corvette Stingray Coupe" 
-                            data-image="assets/img/car 2.png" 
-                            data-price="20" 
-                            onclick="addToCart(this)">
-                            <i class="fi fi-rs-shopping-bag-add"></i>
-                          </button>
-                         </a>
+                            <button class="add-to-cart-btn" 
+                                data-index="{{ product.id }}"
+                                data-id="{{ product.id }}"
+                                data-pid="{{ product.pid }}"
+                                data-title="{{ product.title }}"
+                                data-price="{{ product.price }}"
+                                data-image="{{ product.image.url }}">
+                                <i class="fi fi-rs-shopping-bag-add"></i>
+                            </button>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}

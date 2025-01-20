@@ -3,203 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ---FLATICONS--- -->
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-    <!-- ---SWIPER --- -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-     <!-- ---CSS--- -->
-     <link rel="stylesheet" href="css/styles.css">
-     <script src="https://cdn.jsdelivr.net/npm/appwrite@8.0.0"></script>
+    <title>Dashboard</title>
+    <style>
+        .costumer-dashboard {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #ffffff;
+            width: 700px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar {
+            background-color: hsl(355 34.1% 33.3%);
+            width: 200px;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+
+        .sidebar a {
+            font-size: 14px;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a.active {
+            background-color: hsl(355 34.1% 33.3%);
+            font-weight: bold;
+        }
+
+        .sidebar a:hover {
+            background-color: hsl(355, 36%, 13%)
+        }
+
+        .content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .content h1 {
+            font-size: 20px;
+            color: #222;
+        }
+
+        .content p {
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .content a {
+            color: hsl(355 34.1% 33.3%);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .content a:hover {
+            color: hsl(355, 36%, 13%)
+        }
+    </style>
 </head>
-<body>
-        <!-- ===== HEADER ====  -->
-        <header class="header">
-            <div class="header__top">
-                <div class="header__container container">
-                    <div class="header__contact">
-                        <span>(+48) - 1234 -5678</span>
-    
-                        <span>Our Location</span>
-                    </div>
-                    <p class="header__alert-news">Rare Collection Models</p>
-                    <a href="login-register.html" class="header__top-action">
-                        <img src="./img/user.png" alt="User_logo" width="20" height="20"  style="margin-right: 8px; position: relative; top: 2px;">
-                        Log in / Sign Up
-                    </a>
-                </div>
-            </div>
-    
-            <nav class="nav container">
-                <a href="index.html" class="nav__logo">
-                    <img src="./img/logo.png" alt="" class="nav__logo-img">
-                </a>
-    
-                <div class="nav__menu" id="nav-menu"> 
-                    <ul class="nav__list">
-                           <li class="nav__item language">
-                            <span class="nav__link">Language</span>
-                            <ul class="language-menu">
-                                <li><a href="index.html" class="nav__link">English</a></li>
-                                <li><a href="russian.html" class="nav__link">Russian</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav__item">
-                            <a href="index.html" class="nav__link active-link">Home</a>
-                        </li>
-    
-                        <li class="nav__item">
-                            <a href="shop.html" class="nav__link">Shop</a>
-                        </li>
-    
-                        <li class="nav__item">
-                            <a href="accounts.html" class="nav__link">My Account</a>
-                        </li>
-                     
-                    </ul>
-    
-                    <div class="header__search">
-                        <input type="text" placeholder="Search for items..." class="form__input">
-                        
-                        <button class="search__btn">
-                            <img src="./img/search.png" alt="">
-                        </button>
-                    </div>
-                </div>
-    
-                <div class="header__user-actions">
-                    <a href="wishlist.html" class="header__action-btn_Wishlist">
-                        <img src="./img/wishlist.png" alt="Wishlist">
-                        <span class="count">3</span>
-                    </a>
-    
-                    <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
-                        <img src="./img/cart.png" alt="Cart">
-                        <span class="count">3</span>
-                    </a>
-                </div>
-            </nav>
-            </header>
-    <main class="main">
-        <!-- ===== BREADCRUMB ====  -->
-        <section class="breadcrumb">
-            <ul class="breadcrumb__list flex container">
-                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
-                <li><span class="breadcrumb__link">></span></li>
-                <li><span class="breadcrumb__link">Vendors</span></li>
-             </ul>
-         </section>
-         <div class="products__container grid">
-          <div class="product__item">
-              <div class="product__banner">
-                  <a href="details.html" class="product__images">
-                      <img src="./img/car 1.png" alt="" class="product__img">
-                  </a>
-              </div>
-              <div class="product__content">
-                  <span class="product__category">Total Products: </span>
-                  <a href="details.html">
-                      <h3 class="product__title">Vendor Name: </h3>  
-                  </a>
-                  <p class="product__category">Address:</p>
-                  <p class="product__category">Contact</p>
-
-                  <div class="product__rating">
-                      <i class="fi fi-rs-star"></i>
-                      <i class="fi fi-rs-star"></i> 
-                      <i class="fi fi-rs-star"></i> 
-                      <i class="fi fi-rs-star"></i> 
-                      <i class="fi fi-rs-star"></i> 
-                  </div>
-              </div>
-          </div>
-          <div class="product__item">
-            <div class="product__banner">
-                <a href="details.html" class="product__images">
-                    <img src="./img/car 1.png" alt="" class="product__img">
-                </a>
-            </div>
-            <div class="product__content">
-                <span class="product__category">Total Products: </span>
-                <a href="details.html">
-                    <h3 class="product__title">Vendor Name: </h3>  
-                </a>
-                <p class="product__category">Address:</p>
-                <p class="product__category">Contact</p>
-
-                <div class="product__rating">
-                    <i class="fi fi-rs-star"></i>
-                    <i class="fi fi-rs-star"></i> 
-                    <i class="fi fi-rs-star"></i> 
-                    <i class="fi fi-rs-star"></i> 
-                    <i class="fi fi-rs-star"></i> 
-                </div>
-            </div>
+<section class="costumer-dashboard">
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Orders</a>
+            <a href="#">Track Your Order</a>
+            <a href="#">My Address</a>
+            <a href="#">Account Details</a>
+            <a href="#">Logout</a>
         </div>
-      </div>
-    </main>
-
-
-                 <!-- ===== FOOTER ====  -->
-        <footer class="footer container">
-          <div class="footer__container grind">
-              <div class="footer__content">
-                  <a href="index.html" class="footer__logo">
-                      <img src="./img/logo.png" alt="" class="footer__logo-img">
-                  </a>
-                  <h4 class="footer__subtitle-contact">Contact</h4>
-  
-                  <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
-                  <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
-  
-                  <div class="footer__social">
-                      <h4 class="footer__subtitle">Follow Me</h4>
-                      <div class="footer__social-links flex">
-                          <a href=""><img src="./img/facebook.png" alt="" class="footer__social-icon"></a>
-                          <a href=""><img src="./img/instagram.png" alt="" class="footer__social-icon"></a>
-                          <a href=""><img src="./img/youtube.png" alt="" class="footer__social-icon"></a>
-                          
-                      </div>
-                  </div>
-                  
-              </div>
-  
-              <div class="footer__content">
-                  <h3 class="footer__title">Address</h3>
-                  <ul class="footer__links">
-                      <li><a href="" class="footer__link">About Us</a></li>
-                      <li><a href="" class="footer__link">Delivery Information</a></li>
-                      <li><a href="" class="footer__link">Privacy Policy</a></li>
-                      <li><a href="" class="footer__link">Terms & Conditions</a></li>
-                      <li><a href="" class="footer__link">Contact Us</a></li>
-                  </ul>
-              </div>
-              <div class="footer__content">
-                  <h3 class="footer__title">My Accout</h3>
-                  <ul class="footer__links">
-                      <li><a href="" class="footer__link">Sign In</a></li>
-                      <li><a href="" class="footer__link">View Cart</a></li>
-                      <li><a href="" class="footer__link">My Wishlist</a></li>
-                      <li><a href="" class="footer__link">Track My Order</a></li>
-                      <li><a href="" class="footer__link">Help</a></li>
-                  </ul>
-              </div>
-              <div class="footer__content">
-                  <h3 class="footer__title">Secured Payment Gateways</h3>
-                  <img src="./img/payment_method.png" alt="" class="payment__img">
-              </div>
-          </div>
-  
-          <div class="footer__bottom">
-              <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
-              <span class="designer">Designed By Mariam Rusishvili</span>
-          </div>
-       </footer>
-
-<!-- ===== SWIPER JS ====  -->
-
-<!-- ===== MAIN JS ====  -->
-<script src="./JS/main.js"></script>
-</body>
+        <div class="content">
+            <h1>Hello Rosie!</h1>
+            <p>
+                From your account dashboard, you can easily check & view your 
+                <a href="#">recent orders</a>, manage your 
+                <a href="#">shipping and billing addresses</a> and edit your 
+                <a href="#">password and account details</a>.
+            </p>
+        </div>
+    </div>
+</section>
 </html>

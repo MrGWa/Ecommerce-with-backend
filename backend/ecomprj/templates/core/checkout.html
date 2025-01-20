@@ -1,0 +1,338 @@
+{%load static%} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- ---CSS--- -->
+     <link rel="stylesheet" href="{%static 'assets/CSS/styles.css'%}">
+     <link rel="stylesheet" href="{%static 'assets/CSS/checkout.css'%}">
+     <title>Product Details</title>
+
+     <!-- ---FLATICONS--- -->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+
+
+     
+</head>
+<body>
+        <!-- ===== HEADER ====  -->
+        <header class="header">
+            <div class="header__top">
+                <div class="header__container container">
+                    <div class="header__contact">
+                        <span>(+48) - 1234 -5678</span>
+    
+                        <span>Our Location</span>
+                    </div>
+                    <p class="header__alert-news">Rare Collection Models</p>
+                    <div class="account__panel">
+                        <img src="{% static 'assets/img/user.png' %}" alt="User_logo" width="20" class="account" height="20" style="margin-right: 8px; position: relative; top: 2px;">
+                        <span>Account</span>
+                        <ul class="account__dropdown">
+                            <li><a href="page-account.html" class="nav__link"><i class="fi fi-rr-user"> My Account </i></a></li>
+                            <li><a href="page-account.html" class="nav__link"><i class=
+                                "fi fi-rs-truck-check"
+                                > Order Tracking </i></a></li>
+                            <li><a href="page-account.html" class="nav__link"><i class="fi fi-rs-settings"> Setting</i></a></li>
+                            {% if user.is_authenticated %}
+                            <li><a href="{%url 'userauths:sign-out'%}" class="nav__link"><i class=
+                                "fi fi-rr-exit"> Sign out</i></a></li>
+                            
+                            {%else%}
+                            <li><a href="{%url 'userauths:sign-in'%}" class="nav__link"><i class=
+                                "fi fi-rr-exit"> Sign In</i></a></li>
+                            {%endif%}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <nav class="nav container">
+                <a href="{%url 'core:index'%}"  class="nav__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="" class="nav__logo-img">
+                </a>
+    
+                <div class="nav__menu" id="nav-menu"> 
+                    <ul class="nav__list">
+                           <li class="nav__item language">
+                            <span class="nav__link">Language</span>
+                            <ul class="language-menu">
+                                <li><a href="{%url 'core:index'%}" class="nav__link">English</a></li>
+                                <li><a href="russian.html" class="nav__link">Russian</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{%url 'core:index'%}" class="nav__link">Home</a>
+                        </li>
+    
+                        <li class="nav__item">
+                            <a href="{%url 'core:shop'%}" class="nav__link active-link">Shop</a>
+                        </li>
+    
+                        <li class="nav__item">
+                            <a href="accounts.html" class="nav__link">My Account</a>
+                        </li>
+                     
+                    </ul>
+    
+                    <form class="header__search" action="{%url 'core:search'%}" method="GET">
+                        <input type="text" placeholder="Search for items..." class="form__input" name="q">
+                        
+                        <button class="search__btn" type="submit">
+                            <img src="{% static 'assets/img/search.png' %}" alt="">
+                        </button>
+                    </form>
+                </div>
+    
+                <div class="header__user-actions">
+                    <a href="wishlist.html" class="header__action-btn_Wishlist">
+                        <img src="{% static 'assets/img/wishlist.png' %}" alt="Wishlist">
+                        <span class="count">3</span>
+                    </a>
+    
+                    <a href="{%url 'core:cart'%}" class="header__action-btn_Cart" id="cartImage">
+                        <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
+                        <span class="cart-items-count" style="position: absolute;
+                        top:  -0.625rem;
+                        right: -0.625rem;
+                        background-color: var(--first-color);
+                        color: var(--body-color);
+                        height: 18px;
+                        width: 18px;
+                        line-height: 18px;
+                        border-radius: 50%;
+                        text-align: center;
+                        font-size: var(--small-font-size);">{{ request.session.cart_data_obj|length }}</span>
+                    </a>
+                </div>
+            </nav>
+    
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            </header>
+
+            <!-- ===== BREADCRUMB ====  -->
+            <section class="breadcrumb">
+                <ul class="breadcrumb__list flex container">
+                    <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Shop</span></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Cart</span></li>
+                    <li><span class="breadcrumb__link">></span></li>
+                    <li><span class="breadcrumb__link">Checkout</span></li>
+                 </ul>
+             </section>
+             <!-- ===== CHECKOUT ====  -->
+             <section class="checkout__container">
+                <h1>Checkout</h1>
+                <div class="checkout-container">
+                    <div class="form-section">
+                        <h2>Contact Information</h2>
+                        <form>
+                            <div class="input-group">
+                                <label for="first-name">Name</label>
+                                <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+                            </div>
+                            <div class="full-width">
+                                <label for="email">Email</label>
+                                <input type="email" style="width: 93%;" id="email" name="email" placeholder="Email" required>
+                            </div>
+                            <div class="full-width">
+                                <label for="phone number">Phone Number</label>
+                                <div class="phoneNumber__container" style="width: 33.2rem;">
+                                    <select name="country_code" id="country_code">
+                                        <option value="">Code</option>
+                                    </select>
+                                    <input type="text"  id="phone__number" placeholder="Enter your phone number" required>
+                                </div>
+                            </div>
+                            <div class="full-width">
+                                <h2>Billing Address</h2>
+                            </div>
+                            <div class="full-width">
+                                <label for="country">Country</label>
+                                <select id="countryDropdown" class="countryDropdown" style="width: 93%;">
+                                    <option value="" disabled selected>Select your country</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" placeholder="State">
+                            </div>
+                            <div class="input-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city" placeholder="City" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="zip">Zip Code</label>
+                                <input type="text" style="width: 93%;"  id="zip" name="zip" placeholder="Zip Code" required>
+                            </div>
+                            <div class="full-width" style="padding-right: 5px;">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" style="width: 93%;" name="address" placeholder="Address" required>
+                            </div>
+                        </form>
+                    </div>
+            
+                    <div class="cart-section">
+                        <h2>My Cart</h2>
+                        <div class="cart-items">
+                            {% for product_id, item in cart_data.items %}
+                            <div class="cart-item">
+                                <img src="{{item.image}}" alt="Item">
+                                <div class="cart-item-details">
+                                    <p>{{item.title}}</p>
+                                    <p style="font-size: 0.7975rem; color: rgb(158, 146, 107);">X {{item.qty}}</p>
+                                    <p>{%widthratio item.price 1 item.qty %} $</p>
+                                </div>
+                                <button>-</button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="cart-summary">
+                            <p>Subtotal: {{cart_total_amount}} $</p>
+                            <p>Total: {{cart_total_amount}} $</p>
+                        </div>
+                        <button class="btn btn--sm" style="width: 30rem; padding-left: 3rem; margin-left: 2.8rem;">Process with Payment</button>
+                    </div>
+                </div>
+            </section>
+            
+                      <!-- ===== FOOTER ====  -->
+                      <footer class="footer container">
+                        <div class="footer__container grind">
+                            <div class="footer__content">
+                                <a href="{%url 'core:index'%}" class="footer__logo">
+                                    <img src="{% static 'assets/img/logo.png' %}" alt="" class="footer__logo-img">
+                                </a>
+                                <h4 class="footer__subtitle-contact">Contact</h4>
+                
+                                <p class="footer__description"><Address><span>Address:</span> Wiejenska 16a, Lomza, Poland</Address></p>
+                                <p class="footer__description"><span>Phone:</span> +48 123 123 123</p>
+                
+                                <div class="footer__social">
+                                    <h4 class="footer__subtitle">Follow Me</h4>
+                                    <div class="footer__social-links flex">
+                                        <a href=""><img src="{% static 'assets/img/facebook.png' %}" alt="" class="footer__social-icon"></a>
+                                        <a href=""><img src="{% static 'assets/img/instagram.png' %}" alt="" class="footer__social-icon"></a>
+                                        <a href=""><img src="{% static 'assets/img/youtube.png' %}" alt="" class="footer__social-icon"></a>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                
+                            <div class="footer__content">
+                                <h3 class="footer__title">Address</h3>
+                                <ul class="footer__links">
+                                    <li><a href="" class="footer__link">About Us</a></li>
+                                    <li><a href="" class="footer__link">Delivery Information</a></li>
+                                    <li><a href="" class="footer__link">Privacy Policy</a></li>
+                                    <li><a href="" class="footer__link">Terms & Conditions</a></li>
+                                    <li><a href="" class="footer__link">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer__content">
+                                <h3 class="footer__title">My Accout</h3>
+                                <ul class="footer__links">
+                                    <li><a href="" class="footer__link">Sign In</a></li>
+                                    <li><a href="" class="footer__link">View Cart</a></li>
+                                    <li><a href="" class="footer__link">My Wishlist</a></li>
+                                    <li><a href="" class="footer__link">Track My Order</a></li>
+                                    <li><a href="" class="footer__link">Help</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer__content">
+                                <h3 class="footer__title">Secured Payment Gateways</h3>
+                                <img src="{% static 'assets/img/payment_method.png' %}" alt="" class="payment__img">
+                            </div>
+                        </div>
+                
+                        <div class="footer__bottom">
+                            <p class="copyright">&copy; 2024 Little Dreams. All Rights Reserved</p>
+                            <span class="designer">Designed By Mariam Rusishvili</span>
+                        </div>
+                      </footer>
+                </main>
+            
+   <!-- ===== SWIPER JS ====  -->
+   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+   <script>
+       const countryDropdown = document.getElementById('countryDropdown');
+     
+       // Fetch data from REST Countries API
+       fetch('https://restcountries.com/v3.1/all')
+         .then(response => response.json())
+         .then(countries => {
+           countries.forEach(country => {
+             const option = document.createElement('option');
+             option.value = country.cca2; // Use country code as value
+             option.textContent = country.name.common; // Display country name
+             countryDropdown.appendChild(option);
+           });
+         })
+         .catch(error => console.error('Error fetching countries:', error));
+     </script>
+<script>
+   const dropdown = document.getElementById('country_code');
+
+   fetch('https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json')
+     .then(response => {
+       if (!response.ok) throw new Error(`Network error: ${response.status}`);
+       return response.json();
+     })
+     .then(data => {
+       // Populate the dropdown
+       data.forEach(country => {
+         const option = document.createElement('option');
+         option.value = country.dial_code; // Set dial_code as the value
+         option.textContent = `${country.name} (${country.dial_code})`; // Full display
+         dropdown.appendChild(option);
+       });
+     })
+     .catch(error => {
+       console.error('Error fetching country codes:', error);
+     });
+
+   // Event listener to update display after selection
+   dropdown.addEventListener('change', () => {
+     const selectedValue = dropdown.value; // Get the selected value
+     if (selectedValue) {
+       // Change dropdown content to show only the selected code
+       const tempOption = document.createElement('option');
+       tempOption.value = selectedValue;
+       tempOption.textContent = selectedValue; // Show only the code
+       tempOption.selected = true; // Mark as selected
+
+       // Clear existing options and replace with the single selected option
+       dropdown.innerHTML = '';
+       dropdown.appendChild(tempOption);
+     }
+   });
+ </script>
+
+   <!-- ===== MAIN JS ====  -->
+    <script src="./JS/main.js"></script>
+
+   
+</body>
+</html>             
+
+
+
+
+

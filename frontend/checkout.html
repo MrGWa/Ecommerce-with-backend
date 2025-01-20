@@ -95,55 +95,90 @@
                  </ul>
              </section>
              <!-- ===== CHECKOUT ====  -->
-              <section class="checkout">
-                <section class="checkout__form">
-                    <h1>Checkout Form</h1>
-                    <form class="Contact__details grid">
-                        <h3>Contact Details</h3>
-                        <label for="name">Name:</label><input type="text" id="name" name="name" placeholder="Name" required>
-
-                        <label for="last name">Last Name:</label><input type="text" id="last name" name="last name" placeholder="Last Name" required>
-
-                        <label for="email">Email:</label><input type="text" id="email" name="email" placeholder="Email" required>
-
-                        <label for="phone number">Phone Number:</label>
-                        <div class="phoneNumber__container">
-                            <select name="country_code" id="country_code"><option value="" disabled selected></option></select>
-                            <input type="text" id="phone__number" placeholder="Enter your phone number" required>
-                        </div>
-                    </form>
-
-                    <form class="address__details grid">
-                        <h3>Billing Address</h3>
-
-                        <label for="country">Country:</label><select id="countryDropdown" class="countryDropdown"><option value="" disabled selected>Select your country</option></select>
-                        
-                        <label for="state">State:</label><input type="text" placeholder="State">
-
-                        <label for="city">City:</label><input type="text" placeholder="City" required>
-                        <div class="address_details">
-                        <label for="zip">Zip Code: &nbsp &nbsp &nbsp &nbsp</label>
-                        <label for="address">Address:</label>
-                        <br>
-                        <input id="zip__code" placeholder="Zip Code" required>
-
-                        <input id="address" placeholder="Address" required>
-                        </div>
-                    </form>
-                </section>
-
-                <section class="cart__section">
-                    <h1>Your Cart</h1>
-                    <div class="cart__items"></div>
-                    <div class="cart__totals">
-                        <div id="cart"></div>
-                        <div id="subtotal"></div>
-                        <div id="shipping"></div>
-                        <div id="total"></div>
+             <section class="checkout__container">
+                <h1>Checkout</h1>
+                <div class="checkout-container">
+                    <div class="form-section">
+                        <h2>Contact Information</h2>
+                        <form>
+                            <div class="input-group">
+                                <label for="first-name">Name</label>
+                                <input type="text" id="first-name" name="first-name" placeholder="First Name">
+                            </div>
+                            <div class="input-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" placeholder="Last Name">
+                            </div>
+                            <div class="full-width">
+                                <label for="email">Email</label>
+                                <input type="email" style="width: 93%;" id="email" name="email" placeholder="Email">
+                            </div>
+                            <div class="full-width">
+                                <label for="phone number">Phone Number</label>
+                                <div class="phoneNumber__container">
+                                    <select name="country_code" id="country_code">
+                                        <option value="" disabled selected>Code</option>
+                                    </select>
+                                    <input type="text" id="phone__number" placeholder="Enter your phone number" required>
+                                </div>
+                            </div>
+                            <div class="full-width">
+                                <h2>Billing Address</h2>
+                            </div>
+                            <div class="full-width">
+                                <label for="country">Country</label>
+                                <select id="country" name="country" style="width: 98%;" >
+                                    <option value="">Select Country</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" placeholder="State">
+                            </div>
+                            <div class="input-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city" placeholder="City">
+                            </div>
+                            <div class="input-group">
+                                <label for="zip">Zip Code</label>
+                                <input type="text" style="width: 93%;"  id="zip" name="zip" placeholder="Zip Code">
+                            </div>
+                            <div class="full-width">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" style="width: 93%;" name="address" placeholder="Address">
+                            </div>
+                        </form>
                     </div>
-                    <a href="https://buy.stripe.com/3cs5lYaUb12k51udQQ" class="payment__btn">Proceed with the Payment</a>
-                </section>
-              </section>
+            
+                    <div class="cart-section">
+                        <h2>My Cart</h2>
+                        <div class="cart-items">
+                            <div class="cart-item">
+                                <img src="./img/car 1.png" alt="Item">
+                                <div class="cart-item-details">
+                                    <p>Item Name</p>
+                                    <p>18.00 $</p>
+                                </div>
+                                <button>-</button>
+                            </div>
+            
+                            <div class="cart-item">
+                                <img src="https://via.placeholder.com/80" alt="Item">
+                                <div class="cart-item-details">
+                                    <p>Item Name</p>
+                                    <p>18.00 $</p>
+                                </div>
+                                <button>-</button>
+                            </div>
+                        </div>
+                        <div class="cart-summary">
+                            <p>Subtotal: 18.00 $</p>
+                            <p>Total: 23.00 $</p>
+                        </div>
+                        <button class="checkout-btn">Process with Payment</button>
+                    </div>
+                </div>
+            </section>
                   <!-- ===== NEWSLETTER ====  -->
                   <section class="newsletter section home__newsletter">
                     <div class="newsletter__container container grid">
@@ -276,3 +311,8 @@
    
 </body>
 </html>             
+
+
+
+
+

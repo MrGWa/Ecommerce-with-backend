@@ -94,7 +94,7 @@
                     <span class="count">3</span>
                 </a>
 
-                <a href="cart.html" class="header__action-btn_Cart" id="cartImage">
+                <a href="{%url 'core:cart'%}" class="header__action-btn_Cart" id="cartImage">
                     <img src="{% static 'assets/img/cart.png' %}" alt="Cart">
                     <span class="cart-items-count" style="position: absolute;
                     top:  -0.625rem;
@@ -168,14 +168,18 @@
                     
                     <div class="details__action">
                         <input type="number" id="product-quantity" class="quantity" value="1">
-                        <input type="hidden" id="product-title" class="product-title" value="{{ product.title }}">
+                        <input type="hidden" id="product-title" value="{{ product.title }}">
                         <input type="hidden" id="product-id" value="{{ product.id }}">
+                        <input type="hidden" id="product-pid" value="{{ product.pid }}">
+                        <input type="hidden" id="product-price" value="{{ product.price }}">
+                        <input type="hidden" id="product-image" value="{{ product.image.url }}">
                         
-                        <button class="btn btn--sm" id="add-to-cart-btn" data-product-id="{{ product.id }}" 
-                                data-product-title="{{ product.title }}" 
-                                data-product-price="{{ product.price }}">Add to cart</button>
-
-                        <a href="" class="details__action-btn"><i class="fi fi-rs-heart"></i></a>
+                        <button id="add-to-cart-btn" class="btn btn--sm" data-index="{{ product.id }}" data-index="{{ product.id }}"
+                        data-id="{{ product.id }}"
+                        data-pid="{{ product.pid }}"
+                        data-title="{{ product.title }}"
+                        data-price="{{ product.price }}"
+                        data-image="{{ product.image.url }}">Add to Cart</button>
                     </div>
 
                     <ul class="details__meta">

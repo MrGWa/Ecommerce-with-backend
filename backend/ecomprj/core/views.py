@@ -5,6 +5,8 @@ from taggit.models import Tag
 from core.forms import ProductReviewForm
 from django.db.models import Avg
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -128,6 +130,8 @@ def add_to_cart(request):
         'title': request.POST['title'],
         'qty': request.POST['qty'],
         'price': request.POST['price'],
+        'image': request.POST['image'],
+        'pid': request.POST['pid'],
     }
     
     if 'cart_data_obj' in request.session:
@@ -153,13 +157,79 @@ def cart_view(request):
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price'])
-        return render(request, "core/cart.html", {"cart_data":request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
+        return render(request, "core/cart.html", {
+            "cart_data": request.session['cart_data_obj'], 
+            'totalcartitems': len(request.session['cart_data_obj']),
+            'cart_total_amount': cart_total_amount
+        })
+            
     else:
         messages.warning(request, "Your cart is empty")
         return redirect("core:index")
+
+def delete_item_from_cart(request):
+    product_id = str(request.POST['id'])
+    cart_total_amount = 0
     
+    if 'cart_data_obj' in request.session:
+        if product_id in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            del cart_data[product_id]
+            request.session['cart_data_obj'] = cart_data
+            request.session.modified = True
+            
+            for p_id, item in cart_data.items():
+                cart_total_amount += int(item['qty']) * float(item['price'])
+            
+            context = render_to_string("core/async/cart-list.html", {
+                "cart_data": cart_data,
+                'totalcartitems': len(cart_data),
+                'cart_total_amount': cart_total_amount
+            })
+            
+            return JsonResponse({
+                "data": context,
+                'totalcartitems': len(cart_data)
+            })
+    
+    return JsonResponse({
+        "data": None,
+        'totalcartitems': 0
+    })
 
+def update_cart_quantity(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('id')
+        quantity = int(request.POST.get('quantity', 1))
+        
+        if product_id and quantity > 0:
+            cart_data = request.session.get('cart_data_obj', {})
+            if product_id in cart_data:
+                cart_data[product_id]['qty'] = quantity
+                request.session['cart_data_obj'] = cart_data
+                
+                # Calculate new subtotal
+                item = cart_data[product_id]
+                subtotal = float(item['price']) * quantity
+                
+                return JsonResponse({
+                    'success': True,
+                    'subtotal': subtotal,
+                    'message': 'Cart updated successfully'
+                })
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request'
+    })
 
+def checkout_view(request):
+    cart_total_amount = 0
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total_amount += int(item['qty']) * float(item['price'])
+    return render(request, "core/checkout.html", {"cart_data": request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']),'cart_total_amount': cart_total_amount})
 
-
-
+@login_required
+def customer_dashboard(request):
+    return render(request, "core/dashboard.html")
